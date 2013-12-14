@@ -2,6 +2,7 @@
 #include <fstream>
 #include <sstream>
 #include <Graphics\Graphics.h>
+#include <GameObjects\Factory.h>
 
 TileLevel::TileLevel(std::string level)
 {
@@ -23,7 +24,7 @@ TileLevel::TileLevel(std::string level)
 
           if(num == TILE_PLAYER)
           {
-
+            GameObjectFactory::CreateObject("Player");
             continue;
           }
 

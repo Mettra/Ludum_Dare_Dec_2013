@@ -70,6 +70,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Source\GameObjects\Factory.cpp" />
+    <ClCompile Include="Source\GameObjects\GameObject.cpp" />
+    <ClCompile Include="Source\GameObjects\Player.cpp" />
     <ClCompile Include="Source\Lua\Lua.cpp" />
     <ClCompile Include="Source\main.cpp" />
     <ClCompile Include="Source\StateManager\StateManager.cpp" />
@@ -84,6 +87,7 @@
     <ClInclude Include="Libs\include\SOIL.h" />
     <ClInclude Include="Source\GameObjects\Factory.h" />
     <ClInclude Include="Source\GameObjects\GameObject.h" />
+    <ClInclude Include="Source\GameObjects\Player.h" />
     <ClInclude Include="Source\StateManager\StateManager.h" />
     <ClInclude Include="Source\System\Level.h" />
     <ClInclude Include="Source\Lua\Lua.h" />

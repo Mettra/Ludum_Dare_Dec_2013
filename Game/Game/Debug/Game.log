@@ -1,17 +1,25 @@
-﻿Build started 12/13/2013 10:21:05 PM.
+﻿Build started 12/13/2013 10:38:50 PM.
      1>Project "C:\Users\Mettra\Documents\Ludum_Dare_Dec_2013\Game\Game\Game.vcxproj" on node 2 (build target(s)).
      1>C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\Microsoft.CppBuild.targets(299,5): warning MSB8004: Output Directory does not end with a trailing slash.  This build instance will add the slash as it is required to allow proper evaluation of the Output Directory.
      1>InitializeBuildStatus:
          Creating "Debug\Game.unsuccessfulbuild" because "AlwaysCreate" was specified.
        ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt Source\System\Level.cpp
+         C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt Source\GameObjects\Factory.cpp Source\GameObjects\GameObject.cpp Source\GameObjects\Player.cpp Source\StateManager\StateManager.cpp Source\System\Level.cpp Source\System\System.cpp
+         Player.cpp
+         GameObject.cpp
+         Factory.cpp
+         Generating Code...
+         Compiling...
+         StateManager.cpp
+         Generating Code...
+         Skipping... (no relevant changes detected)
+         System.cpp
          Level.cpp
-     1>c:\users\mettra\documents\ludum_dare_dec_2013\game\game\source\system\level.cpp(57): warning C4244: 'argument' : conversion from 'const int' to 'float', possible loss of data
-     1>c:\users\mettra\documents\ludum_dare_dec_2013\game\game\source\system\level.cpp(57): warning C4244: 'argument' : conversion from 'const int' to 'float', possible loss of data
-     1>c:\users\mettra\documents\ludum_dare_dec_2013\game\game\source\system\level.cpp(57): warning C4244: 'argument' : conversion from 'const int' to 'float', possible loss of data
-     1>c:\users\mettra\documents\ludum_dare_dec_2013\game\game\source\system\level.cpp(57): warning C4244: 'argument' : conversion from 'const int' to 'float', possible loss of data
        Link:
-         C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Mettra\Documents\Ludum_Dare_Dec_2013\Game\\Output\Game.exe" /NOLOGO liblua52.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /ManifestFile:"Debug\Game.exe.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /DEBUG /PDB:"C:\Users\Mettra\Documents\Ludum_Dare_Dec_2013\Game\Output\Game.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\Mettra\Documents\Ludum_Dare_Dec_2013\Game\\Output\Game.lib" /MACHINE:X86 Debug\Lua.obj
+         C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Mettra\Documents\Ludum_Dare_Dec_2013\Game\\Output\Game.exe" /NOLOGO liblua52.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /ManifestFile:"Debug\Game.exe.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /DEBUG /PDB:"C:\Users\Mettra\Documents\Ludum_Dare_Dec_2013\Game\Output\Game.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\Mettra\Documents\Ludum_Dare_Dec_2013\Game\\Output\Game.lib" /MACHINE:X86 Debug\Factory.obj
+         Debug\GameObject.obj
+         Debug\Player.obj
+         Debug\Lua.obj
          Debug\main.obj
          Debug\StateManager.obj
          Debug\Level.obj
@@ -36,4 +44,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:00.95
+Time Elapsed 00:00:02.26

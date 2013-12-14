@@ -1,6 +1,7 @@
 #include "StateManager.h"
 #include <System\Level.h>
 #include <System\System.h>
+#include <GameObjects\Factory.h>
 
 void StateManager::Initialize()
 {
@@ -27,6 +28,11 @@ void StateManager::Update()
       GraphicsRender->BeginRender();
 
       level->Update(0);
+
+      for(auto it = gameObjectList->begin(); it != gameObjectList->end(); ++it)
+      {
+        (*it)->Update(0);
+      }
 
       GraphicsRender->EndRender();
     }

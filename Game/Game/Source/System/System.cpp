@@ -2,6 +2,7 @@
 #include <Lua\Lua.h>
 #include <string>
 #include <StateManager\StateManager.h>
+#include <GameObjects\Factory.h>
 
 bool System::isActive = true;
 GLFWwindow* System::window = 0;
@@ -13,6 +14,9 @@ void System::Initialize()
 {
   stateManager = new StateManager();
   stateManager->Initialize();
+
+  gameObjectList = new std::vector<GameObject *>;
+
   if (!glfwInit())
     return ;
 
@@ -38,6 +42,7 @@ void System::Update()
 void System::Destroy()
 {
   delete stateManager;
+  delete gameObjectList;
 
   //Kill the window
   glfwDestroyWindow(window);
