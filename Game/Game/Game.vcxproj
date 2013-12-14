@@ -70,6 +70,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Source\GameObjects\Collision.cpp" />
     <ClCompile Include="Source\GameObjects\Factory.cpp" />
     <ClCompile Include="Source\GameObjects\GameObject.cpp" />
     <ClCompile Include="Source\GameObjects\Player.cpp" />
@@ -85,6 +86,7 @@
     <ClInclude Include="libs\include\luaconf.h" />
     <ClInclude Include="libs\include\lualib.h" />
     <ClInclude Include="Libs\include\SOIL.h" />
+    <ClInclude Include="Source\GameObjects\Collision.h" />
     <ClInclude Include="Source\GameObjects\Factory.h" />
     <ClInclude Include="Source\GameObjects\GameObject.h" />
     <ClInclude Include="Source\GameObjects\Player.h" />
