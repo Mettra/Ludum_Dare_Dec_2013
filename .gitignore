@@ -3,3 +3,5 @@
 *.sdf
 *.suo
 
+*.ipch
+Game/Game/Debug/

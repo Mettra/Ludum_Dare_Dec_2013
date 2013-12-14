@@ -60,6 +60,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Source\main.cpp" />
+    <ClCompile Include="Source\System\Meta.cpp" />
+    <ClCompile Include="Source\System\System.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Source\System\BaseType.h" />
+    <ClInclude Include="Source\System\Meta.h" />
+    <ClInclude Include="Source\System\System.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
