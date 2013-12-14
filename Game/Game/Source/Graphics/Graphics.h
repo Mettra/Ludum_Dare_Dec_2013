@@ -1,15 +1,13 @@
-#define WIN32_LEAN_AND_MEAN
-#define WIN32_EXTRA_LEAN
+#ifndef GRAPHICS_H
+#define GRAPHICS_H
 
-#include <windows.h>
+#define GLFW_INCLUDE_GLU
+#include "GLFW/glfw3.h"
 
-#include <gl/GL.h>
-#include <gl/GLU.h>
-
-
-void SetupPixelFormat(HDC hDC);
-LRESULT CALLBACK MainWindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
-
+//GLFW Stuff
+void ErrorCallBackForGLFW(int error, const char* description  );
+void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods);
+void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 
 class Graphics {
   unsigned int window_width;
@@ -39,3 +37,8 @@ public:
 
 #define WINDOW_WIDTH 800
 #define WINDOW_HEIGHT 600
+
+extern Graphics* GraphicsRender;
+
+
+#endif

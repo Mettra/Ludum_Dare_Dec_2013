@@ -79,6 +79,8 @@
     <ClInclude Include="Source\StateManager\StateManager.h" />
     <ClInclude Include="Source\System\Level.h" />
     <ClInclude Include="Source\Lua\Lua.h" />
+    <ClInclude Include="Source\Graphics\GLFW\glfw3.h" />
+    <ClInclude Include="Source\Graphics\GLFW\glfw3native.h" />
     <ClInclude Include="Source\System\BaseType.h" />
     <ClInclude Include="Source\System\Meta.h" />
     <ClInclude Include="Source\System\System.h" />
@@ -86,6 +88,10 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Graphics\Graphics.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Library Include="glfw3.lib" />
+    <Library Include="glfw3dll.lib" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -3,6 +3,8 @@
 
 #include "Graphics/Graphics.h"
 
+Graphics* GraphicsRender = new Graphics();
+
 struct S : public MetaInterface<S>
 {
   int thing;

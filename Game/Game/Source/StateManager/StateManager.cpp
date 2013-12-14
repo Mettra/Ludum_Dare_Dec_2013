@@ -22,7 +22,11 @@ void StateManager::Update()
 
     while(state == nextState)
     {
+      GraphicsRender->BeginRender();
+
       level->Update(0);
+
+      GraphicsRender->EndRender();
     }
   }
 }
