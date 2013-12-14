@@ -19,6 +19,8 @@ public:
   }
 
   void Update();
+  class TileLevel *GetLevel(){ return level; }
+
 
 private:
   class TileLevel *level;

@@ -8,11 +8,25 @@ TileLevel::TileLevel(std::string level)
 {
   std::ifstream file(level);
 
+  width = 0;
+  height = 0;
+  std::vector<Tile> tiles;
+
   if(file)
   {
     std::string line;
+
+    file >> width;
+    file >> height;
+
     int x = 0;
-    int y = 0;
+    int y = height;
+
+    tileMap = new Tile*[width];
+    for(int i = 0; i < width; ++i)
+    {
+      tileMap[i] = new Tile[height];
+    }
 
     while(std::getline(file, line))
     {
@@ -26,22 +40,29 @@ TileLevel::TileLevel(std::string level)
           {
             GameObject *obj = GameObjectFactory::CreateObject("Player");
             obj->SetPosition(x,y);
-            continue;
+            
+            num = TILE_AIR;
           }
 
           Tile tile;
           tile.data = (TileData)num;
           tile.x = x;
           tile.y = y;
-          tiles.push_back(tile);
 
+          tileMap[x][y] = tile;
           x++;
         }
-        y++;
+        y--;
         x = 0;
     }
   }
-  GraphicsRender->SetCameraPosition(100,-100);
+
+  GraphicsRender->SetCameraPosition(100,150);
+}
+
+TileLevel::~TileLevel()
+{
+
 }
 
 static const int w = 32;
@@ -49,13 +70,17 @@ static const int h = 32;
 
 void TileLevel::Update(float dt)
 {
-  for(auto it = tiles.begin(); it != tiles.end(); ++it)
+  for(int i = 0; i < width; ++i)
   {
-    if(it->data == TILE_SOLID)
-      GraphicsRender->SetColor(255,0,0,255);
-    if(it->data == TILE_AIR)
-      GraphicsRender->SetColor(0,0,0,0);
-
-    GraphicsRender->DrawRect(it->x * w,-it->y * h,h,w);
+    for(int j = 0; j < height; ++j)
+    {
+      Tile &tile = tileMap[i][j];
+      if(tile.data == TILE_SOLID)
+        GraphicsRender->SetColor(255,0,0,255);
+      if(tile.data == TILE_AIR)
+        GraphicsRender->SetColor(0,0,0,0);
+      
+      GraphicsRender->DrawRect(tile.x * 32,tile.y * 32,h,w);
+    }
   }
 }

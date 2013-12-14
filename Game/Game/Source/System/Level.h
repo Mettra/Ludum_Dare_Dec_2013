@@ -1,3 +1,5 @@
+#pragma once
+
 #include <string>
 #include <vector>
 
@@ -19,8 +21,15 @@ class TileLevel
 {
 public:
   TileLevel(std::string levelName);
+  ~TileLevel();
   void Update(float dt);
+  Tile **GetTileMap() { return tileMap; }
+  int Width() { return width; }
+  int Height() { return height; }
 
 private:
-  std::vector<Tile> tiles;
+  int width;
+  int height;
+
+  Tile **tileMap;
 };

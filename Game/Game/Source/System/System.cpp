@@ -7,8 +7,7 @@
 
 bool System::isActive = true;
 GLFWwindow* System::window = 0;
-
-static StateManager *stateManager = 0;
+StateManager *System::stateManager = 0;
 
 
 void System::Initialize()

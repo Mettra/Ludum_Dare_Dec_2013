@@ -13,7 +13,7 @@ public:
   static bool isActive;
 
   static GLFWwindow* window;
-
+  static class StateManager *stateManager;
 private:
   
 };
