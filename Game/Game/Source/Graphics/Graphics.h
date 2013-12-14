@@ -15,6 +15,9 @@ class Graphics {
   unsigned int window_width;
   unsigned int window_height;
 
+  float cameraX;
+  float cameraY;
+
 public:
   Graphics();
   ~Graphics();
@@ -22,6 +25,8 @@ public:
   void Init();
 
   void SetupProjection( int width, int height );
+
+  void SetCameraPosition(float x, float y);
 
   void SetColor(unsigned char r, unsigned char g, unsigned char b, unsigned char a);
   void DrawRect(float x, float y, float height, float width);

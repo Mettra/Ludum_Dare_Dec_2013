@@ -158,7 +158,7 @@ void Graphics::BeginRender(){
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
   glLoadIdentity();
 
-  glTranslatef(0.0f, 0.0f, -600.0f);//1 to 1 pixel raio apparently.
+  glTranslatef(cameraX, cameraY, -600.0f);//1 to 1 pixel raio apparently.
 
   glPolygonMode(GL_FRONT, GL_FILL);
   glEnable(GL_CULL_FACE);
@@ -193,6 +193,11 @@ void Graphics::DrawRect( float x, float y, float height, float width ) {
   glVertex3f(x2,y2, 0.0f);
   glVertex3f(x2,y1, 0.0f);
   glVertex3f(x1,y1, 0.0f);
+}
+
+void Graphics::SetCameraPosition( float x, float y ) {
+  cameraX = -x;
+  cameraY = -y;
 }
 
 
