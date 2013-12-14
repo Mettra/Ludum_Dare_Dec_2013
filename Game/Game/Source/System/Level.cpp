@@ -24,7 +24,8 @@ TileLevel::TileLevel(std::string level)
 
           if(num == TILE_PLAYER)
           {
-            GameObjectFactory::CreateObject("Player");
+            GameObject *obj = GameObjectFactory::CreateObject("Player");
+            obj->SetPosition(x,y);
             continue;
           }
 
