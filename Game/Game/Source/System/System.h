@@ -1,6 +1,8 @@
 #ifndef SYSTEM_H
 #define SYSTEM_H
 
+#include "Graphics/Graphics.h"
+
 class System
 {
 public:
@@ -8,7 +10,7 @@ public:
   static void Update();
 
 private:
-
+  static GLFWwindow* window;
 };
 
 #endif

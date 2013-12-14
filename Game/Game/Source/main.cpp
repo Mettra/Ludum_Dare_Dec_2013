@@ -3,6 +3,8 @@
 
 #include "Graphics/Graphics.h"
 
+Graphics* GraphicsRender = new Graphics();
+
 struct S : public MetaInterface<S>
 {
   int thing;
@@ -21,6 +23,7 @@ Graphics* g_glRender = new Graphics;
 
 int main(void)
 {
+  /*
   S s;
   s.thing = 1;
   s.thing2 = 2;
@@ -32,10 +35,12 @@ int main(void)
   std::string thing = s.GetMember<std::string>("info");
 
   printf("%s %i %f \n",thing.c_str(),s.GetMember<int>("thing"),s.GetMember<double>("dThing"));
+  */
 
-  //System::Initialize();
-  //System::Update();
-  getchar();
+  System::Initialize();
+  System::Update();
+
+  //getchar();
 
   return 0;
 }
