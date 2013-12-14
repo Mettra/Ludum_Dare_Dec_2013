@@ -95,8 +95,6 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
     g_glRender->BeginRender();
 
-    g_glRender->SetCameraPosition(0.0, 0.0);
-
     g_glRender->SetColor(255, 0, 0, 255);
     g_glRender->DrawRect(0.0, 0.0, 10.0, 10.0);
     
