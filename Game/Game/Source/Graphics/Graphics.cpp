@@ -123,6 +123,7 @@ LRESULT CALLBACK MainWindowProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lPar
 
 Graphics::Graphics() {
   glClearColor(0.0, 0.0, 0.0, 0.0);
+  //glTranslatef(0.0f, 0.0f, -50.0f);
 }
 
 Graphics::~Graphics() {
@@ -148,12 +149,50 @@ void Graphics::SetupProjection( int width, int height ) {
 }
 
 void Graphics::Init() {
+  glClearColor(0.0, 0.0, 0.0, 0.0);
   return;
 }
 
-void Graphics::Render() {
-  glEnd();
+void Graphics::BeginRender(){
+  
+  glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+  glLoadIdentity();
+
+  glTranslatef(0.0f, 0.0f, -600.0f);//1 to 1 pixel raio apparently.
+
+  glPolygonMode(GL_FRONT, GL_FILL);
+  glEnable(GL_CULL_FACE);
+
   glBegin(GL_TRIANGLES);
+
+}
+
+void Graphics::EndRender(){
+  glEnd();
+}
+
+void Graphics::SetColor( unsigned char r, unsigned char g, unsigned char b, unsigned char a ) {
+   glColor4ub(r, g, b, a);
+}
+
+void Graphics::DrawRect( float x, float y, float height, float width ) {
+  float x1, x2, y1, y2;
+
+  if (height < 0) height = 0.0f;
+  if (width  < 0) width  = 0.0f;
+
+  x1 = x - (width/2);
+  x2 = x + (width/2);
+  y1 = y + (height/2);
+  y2 = y - (height/2);
+
+  glVertex3f(x1,y1, 0.0f);
+  glVertex3f(x1,y2, 0.0f);
+  glVertex3f(x2,y2, 0.0f);
+
+  glVertex3f(x2,y2, 0.0f);
+  glVertex3f(x2,y1, 0.0f);
+  glVertex3f(x1,y1, 0.0f);
 }
 
 

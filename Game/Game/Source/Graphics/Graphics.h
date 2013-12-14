@@ -24,10 +24,10 @@ public:
   void SetupProjection( int width, int height );
 
   void SetColor(unsigned char r, unsigned char g, unsigned char b, unsigned char a);
-  void DrawRect(int x, int y, unsigned height, unsigned width);
+  void DrawRect(float x, float y, float height, float width);
 
-  
-  void Render();
+  void BeginRender();
+  void EndRender();
 
 
 };
