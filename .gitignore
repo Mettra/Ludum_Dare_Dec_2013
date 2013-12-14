@@ -9,3 +9,6 @@ Game/Game/Debug/
 *.pdb
 *.log
 *.tlog
+*.idb
+*.pdb
+*.exe
