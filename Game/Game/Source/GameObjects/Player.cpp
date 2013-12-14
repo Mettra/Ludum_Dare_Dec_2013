@@ -2,6 +2,7 @@
 #include <Graphics\Graphics.h>
 #include <System\System.h>
 #include "Collision.h"
+#include <InputManager/InputManager.h>
 
 static const int maxVel = 10.0f;
 
@@ -12,17 +13,17 @@ float SnapToCell(float val)
 
 void Player::Update(float dt)
 {
-  if(glfwGetKey(System::window,GLFW_KEY_D))
+  if(InputManager::IsKeyPressed(GLFW_KEY_D))
   {
     if(velX < maxVel)
       velX += maxVel / 10;
   }
-  if(glfwGetKey(System::window,GLFW_KEY_A))
+  if(InputManager::IsKeyPressed(GLFW_KEY_A))
   {
     if(velX > -maxVel)
       velX -= maxVel / 10;
   }
-  if(glfwGetKey(System::window,GLFW_KEY_W))
+  if(InputManager::IsKeyPressed(GLFW_KEY_W))
   {
     velY = 5.0f;
   }

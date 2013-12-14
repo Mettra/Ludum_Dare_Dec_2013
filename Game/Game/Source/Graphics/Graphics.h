@@ -10,6 +10,7 @@
 #define WINDOW_WIDTH 800
 #define WINDOW_HEIGHT 600
 #define MAX_TEXTURES 64
+#define FRAMERATE_MAX static_cast<double>(1.0/60.0)
 
 //GLFW Stuff
 void ErrorCallBackForGLFW(int error, const char* description  );
@@ -22,12 +23,15 @@ class Graphics {
 
   float cameraX;
   float cameraY;
-
+  double currentTime;
+  double dt;
   GLuint Texture[MAX_TEXTURES];
 
 public:
   Graphics();
   ~Graphics();
+
+  double GetDt(){return dt;};
 
   void Init();
 

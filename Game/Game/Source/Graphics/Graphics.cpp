@@ -27,7 +27,8 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height){
 Graphics::Graphics() {
   glClearColor(0.0, 0.0, 0.0, 0.0);
   glEnable(GL_TEXTURE_2D);
-  
+  currentTime = 0.0;
+  glfwSwapInterval(1);
   glGenTextures(MAX_TEXTURES, Texture);
   
 }
@@ -60,7 +61,18 @@ void Graphics::Init() {
 }
 
 void Graphics::BeginRender(){
-  
+  double time = glfwGetTime();
+  dt = time - currentTime;
+  double maxFramerate = FRAMERATE_MAX;
+  /*
+  while( dt < maxFramerate){
+    time = glfwGetTime();
+    dt = time - currentTime; 
+  }*/
+  currentTime = time;
+  fprintf(stderr, "DT: %f\n", dt);
+
+
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
   glLoadIdentity();
 

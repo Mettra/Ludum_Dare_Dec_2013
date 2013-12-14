@@ -35,11 +35,11 @@ void StateManager::Update()
 
       GraphicsRender->BeginRender();
 
-      level->Update(0.016);
+      level->Update(GraphicsRender->GetDt());
 
       for(auto it = gameObjectList->begin(); it != gameObjectList->end(); ++it)
       {
-        (*it)->Update(0.016);
+        (*it)->Update(GraphicsRender->GetDt());
       }
 
       
