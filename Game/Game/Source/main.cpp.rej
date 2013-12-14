@@ -1,0 +1,6 @@
+diff a/Game/Game/Source/main.cpp b/Game/Game/Source/main.cpp	(rejected hunks)
+@@ -2,3 +3,4 @@
++<<<<<<< HEAD
+ #include "System/System.h"
+ #include "System/Meta.h"
+ 
