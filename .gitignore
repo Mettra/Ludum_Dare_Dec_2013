@@ -2,6 +2,10 @@
 *.sdf
 *.suo
 
+<<<<<<< HEAD
+*.ipch
+Game/Game/Debug/
+=======
 
 *.obj
 *.exe
@@ -10,3 +14,4 @@
 *.log
 *.tlog
 
+>>>>>>> fe11a7e31f5978f8afe43a56271c15f96dfbc504
