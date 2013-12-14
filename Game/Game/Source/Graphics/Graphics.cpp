@@ -1,10 +1,11 @@
 #include "Graphics/Graphics.h"
+#include <System/System.h>
 
 
 //Link in the libraries
 #pragma comment(lib, "opengl32.lib")
 #pragma comment(lib, "glu32.lib")
-
+#pragma comment(lib, "soil.lib")
 
 
 #include <stdio.h>
@@ -71,6 +72,7 @@ void Graphics::BeginRender(){
 
 void Graphics::EndRender(){
   glEnd();
+  glfwSwapBuffers(System::window);
 }
 
 void Graphics::SetColor( unsigned char r, unsigned char g, unsigned char b, unsigned char a ) {
@@ -100,6 +102,39 @@ void Graphics::DrawRect( float x, float y, float height, float width ) {
 void Graphics::SetCameraPosition( float x, float y ) {
   cameraX = -x;
   cameraY = -y;
+}
+
+void Graphics::AddTexture( const char *filename, unsigned int index ) {
+  TextureList.at(index) = SOIL_load_OGL_texture(
+                          "img.png",
+                          SOIL_LOAD_RGBA,
+                          SOIL_CREATE_NEW_ID,
+                          SOIL_FLAG_MIPMAPS | SOIL_FLAG_COMPRESS_TO_DXT
+                          );
+}
+
+void Graphics::SetTexture( unsigned int id ) {
+
+}
+
+void Graphics::DrawTexturedRect( float x, float y, float height, float width ) {
+  float x1, x2, y1, y2;
+
+  if (height < 0) height = 0.0f;
+  if (width  < 0) width  = 0.0f;
+
+  x1 = x - (width/2);
+  x2 = x + (width/2);
+  y1 = y + (height/2);
+  y2 = y - (height/2);
+
+  glVertex3f(x1,y1, 0.0f);
+  glVertex3f(x1,y2, 0.0f);
+  glVertex3f(x2,y2, 0.0f);
+
+  glVertex3f(x2,y2, 0.0f);
+  glVertex3f(x2,y1, 0.0f);
+  glVertex3f(x1,y1, 0.0f);
 }
 
 

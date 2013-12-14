@@ -13,6 +13,9 @@ public:
   static bool isActive;
 
   static GLFWwindow* window;
+
+private:
+  
 };
 
 #endif
