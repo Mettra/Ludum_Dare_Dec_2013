@@ -5,7 +5,7 @@
 #include "GLFW/glfw3.h"
 
 //Image Handling
-#include <Libs/include/SOIL.h>
+#include <include/SOIL.h>
 
 
 #include <vector>

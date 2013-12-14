@@ -3,8 +3,8 @@
 
 enum TileData
 {
-  TILE_AIR,
-  TILE_SOLID,
+  TILE_AIR = 0,
+  TILE_SOLID = 1,
   TILE_PLAYER = 99
 };
 

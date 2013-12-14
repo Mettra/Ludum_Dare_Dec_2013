@@ -38,21 +38,9 @@ void System::Update()
 void System::Destroy()
 {
   delete stateManager;
-  double time = glfwGetTime();
-  //Begin Graphics
-  GraphicsRender->BeginRender();
-
-  
-
-  GraphicsRender->EndRender();
-  //End Graphics
-  glfwSwapBuffers(window);
-  glfwPollEvents();
 
   //Kill the window
   glfwDestroyWindow(window);
-  
-  
-  
+
   glfwTerminate();
 }

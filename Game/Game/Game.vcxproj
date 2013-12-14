@@ -76,6 +76,14 @@
     <ClCompile Include="Source\System\Level.cpp" />
     <ClCompile Include="Source\System\Meta.cpp" />
     <ClCompile Include="Source\System\System.cpp" />
+    <ClInclude Include="libs\include\lauxlib.h" />
+    <ClInclude Include="libs\include\lua.h" />
+    <ClInclude Include="libs\include\lua.hpp" />
+    <ClInclude Include="libs\include\luaconf.h" />
+    <ClInclude Include="libs\include\lualib.h" />
+    <ClInclude Include="Libs\include\SOIL.h" />
+    <ClInclude Include="Source\GameObjects\Factory.h" />
+    <ClInclude Include="Source\GameObjects\GameObject.h" />
     <ClInclude Include="Source\StateManager\StateManager.h" />
     <ClInclude Include="Source\System\Level.h" />
     <ClInclude Include="Source\Lua\Lua.h" />

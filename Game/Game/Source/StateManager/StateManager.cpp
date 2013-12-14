@@ -21,7 +21,9 @@ void StateManager::Update()
     }
 
     while(state == nextState)
-    {
+    {  
+      glfwPollEvents();
+
       GraphicsRender->BeginRender();
 
       level->Update(0);

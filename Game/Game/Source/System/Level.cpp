@@ -21,6 +21,12 @@ TileLevel::TileLevel(std::string level)
         {
           linestream >> num;
 
+          if(num == TILE_PLAYER)
+          {
+
+            continue;
+          }
+
           Tile tile;
           tile.data = (TileData)num;
           tile.x = x;
@@ -30,13 +36,24 @@ TileLevel::TileLevel(std::string level)
           x++;
         }
         y++;
+        x = 0;
     }
   }
+  GraphicsRender->SetCameraPosition(100,-100);
 }
+
+static const int w = 32;
+static const int h = 32;
 
 void TileLevel::Update(float dt)
 {
   for(auto it = tiles.begin(); it != tiles.end(); ++it)
   {
+    if(it->data == TILE_SOLID)
+      GraphicsRender->SetColor(255,0,0,255);
+    if(it->data == TILE_AIR)
+      GraphicsRender->SetColor(0,0,0,0);
+
+    GraphicsRender->DrawRect(it->x * w,-it->y * h,h,w);
   }
 }
