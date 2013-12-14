@@ -11,7 +11,7 @@
 #include <stdio.h>
 //GLFW Stuff
 void ErrorCallBackForGLFW(int error, const char* description  ){
-  fputs(description, stderr);
+  fprintf(stderr,"GLFW Err #%i: '&s'\n", error, description);
 }
 
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods){
@@ -26,11 +26,14 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height){
 //GraphicsHandler
 Graphics::Graphics() {
   glClearColor(0.0, 0.0, 0.0, 0.0);
-  //glTranslatef(0.0f, 0.0f, -50.0f);
+  glEnable(GL_TEXTURE_2D);
+  
+  glGenTextures(MAX_TEXTURES, Texture);
+  
 }
 
 Graphics::~Graphics() {
-
+  glDeleteTextures(MAX_TEXTURES, Texture);
 }
 
 void Graphics::SetupProjection( int width, int height ) {
@@ -66,12 +69,10 @@ void Graphics::BeginRender(){
   glPolygonMode(GL_FRONT, GL_FILL);
   glEnable(GL_CULL_FACE);
 
-  glBegin(GL_TRIANGLES);
 
 }
 
 void Graphics::EndRender(){
-  glEnd();
   glfwSwapBuffers(System::window);
 }
 
@@ -90,6 +91,7 @@ void Graphics::DrawRect( float x, float y, float height, float width ) {
   y1 = y + (height/2);
   y2 = y - (height/2);
 
+  glBegin(GL_TRIANGLES);
   glVertex3f(x1,y1, 0.0f);
   glVertex3f(x1,y2, 0.0f);
   glVertex3f(x2,y2, 0.0f);
@@ -97,6 +99,7 @@ void Graphics::DrawRect( float x, float y, float height, float width ) {
   glVertex3f(x2,y2, 0.0f);
   glVertex3f(x2,y1, 0.0f);
   glVertex3f(x1,y1, 0.0f);
+  glEnd();
 }
 
 void Graphics::SetCameraPosition( float x, float y ) {
@@ -105,16 +108,20 @@ void Graphics::SetCameraPosition( float x, float y ) {
 }
 
 void Graphics::AddTexture( const char *filename, unsigned int index ) {
-  TextureList.at(index) = SOIL_load_OGL_texture(
-                          "img.png",
-                          SOIL_LOAD_RGBA,
+  Texture[index] = SOIL_load_OGL_texture(
+                          filename,
+                          SOIL_LOAD_AUTO,
                           SOIL_CREATE_NEW_ID,
-                          SOIL_FLAG_MIPMAPS | SOIL_FLAG_COMPRESS_TO_DXT
+                          SOIL_FLAG_MIPMAPS | SOIL_FLAG_INVERT_Y | SOIL_FLAG_COMPRESS_TO_DXT
                           );
+  glBindTexture(GL_TEXTURE_2D, Texture[index]);
+  
+  fprintf(stderr,"SOIL loading error: '%s'\n", SOIL_last_result() );
+  
 }
 
 void Graphics::SetTexture( unsigned int id ) {
-
+  glBindTexture(GL_TEXTURE_2D, Texture[id]);
 }
 
 void Graphics::DrawTexturedRect( float x, float y, float height, float width ) {
@@ -127,14 +134,21 @@ void Graphics::DrawTexturedRect( float x, float y, float height, float width ) {
   x2 = x + (width/2);
   y1 = y + (height/2);
   y2 = y - (height/2);
+  
 
-  glVertex3f(x1,y1, 0.0f);
-  glVertex3f(x1,y2, 0.0f);
-  glVertex3f(x2,y2, 0.0f);
+  glEnable(GL_TEXTURE_2D);
+  glBegin(GL_TRIANGLES);
 
-  glVertex3f(x2,y2, 0.0f);
-  glVertex3f(x2,y1, 0.0f);
-  glVertex3f(x1,y1, 0.0f);
+  SetColor(255, 255, 255, 255);
+  glTexCoord2f(0.0, 1.0);glVertex3f(x1,y1, 0.0f);
+  glTexCoord2f(0.0, 0.0);glVertex3f(x1,y2, 0.0f);
+  glTexCoord2f(1.0, 0.0);glVertex3f(x2,y2, 0.0f);
+
+  glTexCoord2f(1.0, 0.0);glVertex3f(x2,y2, 0.0f);
+  glTexCoord2f(1.0, 1.0);glVertex3f(x2,y1, 0.0f);
+  glTexCoord2f(0.0, 1.0);glVertex3f(x1,y1, 0.0f);
+  glEnd();
+  glDisable(GL_TEXTURE_2D);
 }
 
 

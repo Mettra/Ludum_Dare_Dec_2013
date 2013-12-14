@@ -7,8 +7,9 @@
 //Image Handling
 #include <include/SOIL.h>
 
-
-#include <vector>
+#define WINDOW_WIDTH 800
+#define WINDOW_HEIGHT 600
+#define MAX_TEXTURES 64
 
 //GLFW Stuff
 void ErrorCallBackForGLFW(int error, const char* description  );
@@ -22,7 +23,7 @@ class Graphics {
   float cameraX;
   float cameraY;
 
-  std::vector<GLuint> TextureList;
+  GLuint Texture[MAX_TEXTURES];
 
 public:
   Graphics();
@@ -48,8 +49,7 @@ public:
 
 };
 
-#define WINDOW_WIDTH 800
-#define WINDOW_HEIGHT 600
+
 
 extern Graphics* GraphicsRender;
 
