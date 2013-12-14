@@ -37,8 +37,9 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>$(ProjectDir)Source;$(IncludePath)</IncludePath>
+    <IncludePath>$(ProjectDir)Source;$(ProjectDir)Libs;$(IncludePath)</IncludePath>
     <OutDir>$(SolutionDir)\Output</OutDir>
+    <LibraryPath>$(ProjectDir)Libs;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <OutDir>$(SolutionDir)\Output</OutDir>
@@ -51,6 +52,7 @@
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Console</SubSystem>
+      <AdditionalDependencies>liblua52.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -68,9 +70,15 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Source\Lua\Lua.cpp" />
     <ClCompile Include="Source\main.cpp" />
+    <ClCompile Include="Source\StateManager\StateManager.cpp" />
+    <ClCompile Include="Source\System\Level.cpp" />
     <ClCompile Include="Source\System\Meta.cpp" />
     <ClCompile Include="Source\System\System.cpp" />
+    <ClInclude Include="Source\StateManager\StateManager.h" />
+    <ClInclude Include="Source\System\Level.h" />
+    <ClInclude Include="Source\Lua\Lua.h" />
     <ClInclude Include="Source\System\BaseType.h" />
     <ClInclude Include="Source\System\Meta.h" />
     <ClInclude Include="Source\System\System.h" />

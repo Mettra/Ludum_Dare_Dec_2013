@@ -6,9 +6,9 @@ class System
 public:
   static void Initialize();
   static void Update();
+  static void Destroy();
 
-private:
-
+  static bool isActive;
 };
 
 #endif
