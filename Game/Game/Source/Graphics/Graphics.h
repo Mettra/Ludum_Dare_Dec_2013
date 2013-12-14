@@ -4,6 +4,12 @@
 #define GLFW_INCLUDE_GLU
 #include "GLFW/glfw3.h"
 
+//Image Handling
+#include <Libs/include/SOIL.h>
+
+
+#include <vector>
+
 //GLFW Stuff
 void ErrorCallBackForGLFW(int error, const char* description  );
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods);
@@ -15,6 +21,8 @@ class Graphics {
 
   float cameraX;
   float cameraY;
+
+  std::vector<GLuint> TextureList;
 
 public:
   Graphics();
@@ -32,6 +40,11 @@ public:
   void BeginRender();
   void EndRender();
 
+
+  void AddTexture(const char *filename, unsigned int index);
+
+  void SetTexture(unsigned int id);
+  void DrawTexturedRect(float x, float y, float height, float widt);
 
 };
 

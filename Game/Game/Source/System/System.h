@@ -9,8 +9,10 @@ public:
   static void Initialize();
   static void Update();
 
-private:
   static GLFWwindow* window;
+
+private:
+  
 };
 
 #endif

@@ -37,7 +37,7 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>$(ProjectDir)Source;$(IncludePath)</IncludePath>
+    <IncludePath>$(ProjectDir)Source;$(ProjectDir);$(IncludePath)</IncludePath>
     <OutDir>$(SolutionDir)\Output</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -71,6 +71,7 @@
     <ClCompile Include="Source\main.cpp" />
     <ClCompile Include="Source\System\Meta.cpp" />
     <ClCompile Include="Source\System\System.cpp" />
+    <ClInclude Include="Libs\include\SOIL.h" />
     <ClInclude Include="Source\Graphics\GLFW\glfw3.h" />
     <ClInclude Include="Source\Graphics\GLFW\glfw3native.h" />
     <ClInclude Include="Source\System\BaseType.h" />
@@ -84,6 +85,7 @@
   <ItemGroup>
     <Library Include="glfw3.lib" />
     <Library Include="glfw3dll.lib" />
+    <Library Include="soil.lib" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

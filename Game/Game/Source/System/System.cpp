@@ -40,7 +40,7 @@ void System::Update()
 
     GraphicsRender->EndRender();
     //End Graphics
-    glfwSwapBuffers(window);
+    
     glfwPollEvents();
   }
 
