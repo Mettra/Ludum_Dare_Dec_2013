@@ -15,35 +15,30 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-<<<<<<< HEAD
     <ClCompile Include="Source\main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\System\Meta.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Source\System\System.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Source\System\Meta.cpp">
-=======
     <ClCompile Include="Source\Graphics\Graphics.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\main.cpp">
->>>>>>> fe11a7e31f5978f8afe43a56271c15f96dfbc504
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-<<<<<<< HEAD
-    <ClInclude Include="Source\System\System.h">
+    <ClInclude Include="Source\System\BaseType.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Source\System\Meta.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Source\System\BaseType.h">
-=======
+    <ClInclude Include="Source\System\System.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="Source\Graphics\Graphics.h">
->>>>>>> fe11a7e31f5978f8afe43a56271c15f96dfbc504
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
