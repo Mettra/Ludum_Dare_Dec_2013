@@ -5,7 +5,7 @@
 class Button : public GameObject
 {
 public:
-  Button() : isInit(false) {}
+  Button() : isInit(false),active(false) {}
   void Update(float dt);
   void Load(std::string const &filename);
   void GetTiles();
@@ -17,4 +17,5 @@ private:
   bool isInit;
   unsigned int texture;
   std::vector<Tile> tiles;
+  bool active;
 };

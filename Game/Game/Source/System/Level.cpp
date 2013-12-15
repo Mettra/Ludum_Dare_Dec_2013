@@ -6,6 +6,7 @@
 #include <System\System.h>
 #include <GameObjects\TextureObject.h>
 #include <GameObjects\Player.h>
+#include <GameObjects\Button.h>
 
 struct Bitmap
 {
@@ -185,11 +186,11 @@ TileLevel::TileLevel(std::string level)
       }
       else if(num == TILE_BUTTON)
       {
-        TextureObject *obj = (TextureObject *)GameObjectFactory::CreateObject("TextureObject");
-        obj->SetPosition((float)x + 0.5,(float)y + 0.5);
+        Button *obj = (Button *)GameObjectFactory::CreateObject("Button");
+        obj->SetPosition((float)x,(float)y);
         obj->Load("guy.png");
-        obj->height = 128;
-        obj->width = 512;
+        obj->height = 32;
+        obj->width = 32;
       }
 
       tile.x = x;
@@ -220,7 +221,9 @@ TileLevel::TileLevel(std::string level)
 
   checkPointRight = GraphicsRender->GetCurrentId();
   GraphicsRender->AddTexture("checkPoint_right.png",checkPointRight);
-  
+
+  buttonId = GraphicsRender->GetCurrentId();
+  GraphicsRender->AddTexture("button.png",buttonId);
 
   GraphicsRender->SetCameraPosition(100,150);
 }
@@ -282,7 +285,7 @@ void TileLevel::Update(float dt)
 
       if(tile->data != tileData)
       {
-        //usedClick = true;
+        usedClick = true;
         PrevTile = *tile;
 
         tile->data = tileData;
@@ -314,6 +317,8 @@ void TileLevel::Update(float dt)
         GraphicsRender->SetTexture(checkPointLeft);
       else if(tile.data == TILE_CHECKPOINT_RIGHT)
         GraphicsRender->SetTexture(checkPointRight);
+      else if(tile.data == TILE_BUTTON)
+        GraphicsRender->SetTexture(buttonId);
 
       if(tile.data == TILE_AIR || tile.data == TILE_NEXT_LEVEL)
         drawTexture = false;

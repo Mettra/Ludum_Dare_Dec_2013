@@ -13,7 +13,7 @@ float SnapToCell(float val)
   return (int)(val) + 0.5f;
 }
 
-void Player::Load(std::string const &filename)
+void Player::Load(std::string const &filename,bool alt)
 {
   texture = GraphicsRender->GetCurrentId();
   GraphicsRender->AddTexture(filename.c_str(),texture);

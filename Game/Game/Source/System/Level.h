@@ -76,6 +76,7 @@ private:
   unsigned beamIdHoriz;
   unsigned checkPointLeft;
   unsigned checkPointRight;
+  unsigned buttonId;
 
   std::vector<std::pair<Color,Tile>> colorMatch;
 
