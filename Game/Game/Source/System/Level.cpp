@@ -4,6 +4,8 @@
 #include <Graphics\Graphics.h>
 #include <GameObjects\Factory.h>
 #include <System\System.h>
+#include <InputManager\InputManager.h>
+
 
 struct Bitmap
 {
@@ -219,7 +221,9 @@ void TileLevel::Update(float dt)
   int tileX = (int)(std::floor((dx / 32) + 0.5f));
   int tileY = (int)(std::floor((dy / 32) + 0.5f));
 
-  if(usedClick == false && glfwGetMouseButton(System::window,GLFW_MOUSE_BUTTON_1) == GLFW_PRESS)
+  
+
+  if(usedClick == false && InputManager::IsMouseClickedRight() )
   {
     Tile *tile = GetTile(tileX,tileY);
     if(tile == NULL)

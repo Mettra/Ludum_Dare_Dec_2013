@@ -134,6 +134,11 @@ void Graphics::AddTexture( const char *filename, unsigned int index ) {
 
 void Graphics::SetTexture( unsigned int id ) {
   glBindTexture(GL_TEXTURE_2D, Texture[id]);
+  textureX1 = 0;
+  textureX2 = 1;
+  textureY1 = 1;
+  textureY2 = 0;
+
 }
 
 void Graphics::DrawTexturedRect( float x, float y, float height, float width ) {
@@ -152,15 +157,25 @@ void Graphics::DrawTexturedRect( float x, float y, float height, float width ) {
   glBegin(GL_TRIANGLES);
 
   SetColor(255, 255, 255, 255);
-  glTexCoord2f(0.0, 1.0);glVertex3f(x1,y1, 0.0f);
-  glTexCoord2f(0.0, 0.0);glVertex3f(x1,y2, 0.0f);
-  glTexCoord2f(1.0, 0.0);glVertex3f(x2,y2, 0.0f);
+  glTexCoord2f(textureX1, textureY1);glVertex3f(x1,y1, 0.0f);
+  glTexCoord2f(textureX1, textureY2);glVertex3f(x1,y2, 0.0f);
+  glTexCoord2f(textureX2, textureY2);glVertex3f(x2,y2, 0.0f);
 
-  glTexCoord2f(1.0, 0.0);glVertex3f(x2,y2, 0.0f);
-  glTexCoord2f(1.0, 1.0);glVertex3f(x2,y1, 0.0f);
-  glTexCoord2f(0.0, 1.0);glVertex3f(x1,y1, 0.0f);
+  glTexCoord2f(textureX2, 0.0);glVertex3f(x2,y2, 0.0f);
+  glTexCoord2f(textureX2, textureY1);glVertex3f(x2,y1, 0.0f);
+  glTexCoord2f(textureX1, textureY1);glVertex3f(x1,y1, 0.0f);
   glEnd();
   glDisable(GL_TEXTURE_2D);
+}
+
+void Graphics::TextureFlipHorizontal() {
+  textureX1 = 1;
+  textureX2 = 0;
+}
+
+void Graphics::TextureFlipVertical() {
+  textureY1 = 0;
+  textureY2 = 1;
 }
 
 

@@ -23,9 +23,18 @@ class Graphics {
 
   float cameraX;
   float cameraY;
+
   double currentTime;
   double dt;
+
+
   GLuint Texture[MAX_TEXTURES];
+  
+  float textureX1;
+  float textureX2;
+  float textureY1;
+  float textureY2;
+
 
 public:
   Graphics();
@@ -52,6 +61,9 @@ public:
 
   void SetTexture(unsigned int id);
   void DrawTexturedRect(float x, float y, float height, float widt);
+
+  void TextureFlipHorizontal();
+  void TextureFlipVertical();
 
 };
 
