@@ -48,6 +48,15 @@
     <ClCompile Include="Source\GameObjects\Collision.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Source\InputManager\InputManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GameObjects\TextureObject.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GameObjects\Button.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\System\BaseType.h">
@@ -107,9 +116,19 @@
     <ClInclude Include="Source\GameObjects\Collision.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Source\InputManager\InputManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GameObjects\TextureObject.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GameObjects\Button.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Library Include="glfw3.lib" />
     <Library Include="glfw3dll.lib" />
+    <Library Include="soil.lib" />
   </ItemGroup>
 </Project>

@@ -13,6 +13,12 @@ float SnapToCell(float val)
   return (int)(val) + 0.5f;
 }
 
+void Player::Load(std::string const &filename)
+{
+  texture = GraphicsRender->GetCurrentId();
+  GraphicsRender->AddTexture(filename.c_str(),texture);
+}
+
 void Player::ResolveCollition()
 {
   bool found = false;
@@ -92,23 +98,26 @@ void Player::Update(float dt)
   Tile *tile =  System::stateManager->GetLevel()->GetTile(x,y);
   if(tile != NULL)
   {
-    if(tile->data == TILE_CHECKPOINT)
+    if(tile->data == TILE_CHECKPOINT || tile->data == TILE_CHECKPOINT_HORIZ)
       System::stateManager->GetLevel()->ResetClick();
     
-    if(tile->data == TILE_SOLID)
+    if(tile->solid == true)
     {
       inBlockCount++;
       if(inBlockCount == 10)
         ResolveCollition();
     }
     else
-    {
       inBlockCount = 0;
+
+    if(tile->data == TILE_NEXT_LEVEL)
+    {
+      System::stateManager->NextLevel();
     }
   }
 
-  GraphicsRender->SetColor(0,255,0,255);
-  GraphicsRender->DrawRect(x * 32,y * 32,32,32);
+  GraphicsRender->SetTexture(texture);
+  GraphicsRender->DrawTexturedRect(x * 32,y * 32,32,32);
   GraphicsRender->SetCameraPosition(x * 32,y * 32);
 }
 

@@ -1,3 +1,5 @@
+#pragma once
+
 #include <vector>
 #include <string>
 
@@ -33,6 +35,8 @@ private:
   CreateFunc create;
 };
 
+#define PASTE(x,y) x##y
+
 #define ADD_GAMEOBJECT(Object) \
-  GameObject *Create_##Object__(){ return new Object(); }\
-  GameObjectFactory factory_##Object(#Object,Create_##Object__);
+  GameObject * PASTE(Create , Object)() { return new Object(); }\
+  GameObjectFactory PASTE(factory , Object)(#Object,PASTE(Create , Object));

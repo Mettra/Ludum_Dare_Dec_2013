@@ -7,10 +7,11 @@
 struct Color
 {
   typedef unsigned char uchar;
-  Color(uchar r = 0, uchar g = 0, uchar b = 0) : r(r),g(g),b(b) {}
+  Color(uchar r = 0, uchar g = 0, uchar b = 0,uchar a = 0) : r(r),g(g),b(b),a(a) {}
   unsigned r;
   unsigned g;
   unsigned b;
+  unsigned a;
 
   bool operator ==(Color const &rhs)
   {
@@ -25,15 +26,27 @@ enum TileData
 {
   TILE_AIR = 0,
   TILE_SOLID = 1,
+  TILE_CHECKPOINT_BASE,
+  TILE_CHECKPOINT_TOP,
   TILE_CHECKPOINT,
+  TILE_CHECKPOINT_HORIZ,
+  TILE_CHECKPOINT_LEFT,
+  TILE_CHECKPOINT_RIGHT,
+  TILE_NEXT_LEVEL,
+  TILE_BUTTON,
+  TILE_MESSAGE_1,
+  TILE_MESSAGE_2,
   TILE_PLAYER = 99
 };
 
 struct Tile
 {
+  Tile(TileData data = TILE_AIR,bool solid = false) : data(data),solid(solid) {}
   TileData data;
   int x;
   int y;
+  int aValue;
+  bool solid;
 };
 
 class TileLevel
@@ -46,7 +59,7 @@ public:
   int Width() { return width; }
   int Height() { return height; }
   Tile *GetTile(int x, int y);
-  int HandleColor(Color c);
+  Tile HandleColor(Color c);
   void ResetClick();
 
 private:
@@ -55,7 +68,16 @@ private:
   bool usedClick;
   Tile PrevTile;
 
-  std::vector<std::pair<Color,TileData>> colorMatch;
+  unsigned tileId;
+  unsigned checkPointId;
+  unsigned checkPointTop;
+  unsigned beamId;
+
+  unsigned beamIdHoriz;
+  unsigned checkPointLeft;
+  unsigned checkPointRight;
+
+  std::vector<std::pair<Color,Tile>> colorMatch;
 
   Tile **tileMap;
 };

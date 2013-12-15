@@ -26,6 +26,7 @@ class Graphics {
   double currentTime;
   double dt;
   GLuint Texture[MAX_TEXTURES];
+  unsigned int currentId;
 
 public:
   Graphics();
@@ -34,6 +35,8 @@ public:
   double GetDt(){return dt;};
 
   void Init();
+
+  unsigned int GetCurrentId() { return currentId; }
 
   void SetupProjection( int width, int height );
 

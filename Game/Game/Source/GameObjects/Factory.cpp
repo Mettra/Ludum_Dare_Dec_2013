@@ -20,6 +20,8 @@ GameObject *GameObjectFactory::CreateObject(std::string name)
       gameObjectList->push_back(obj);
       return obj;
     }
+
+    iter = iter->next;
   }
 
   return 0;

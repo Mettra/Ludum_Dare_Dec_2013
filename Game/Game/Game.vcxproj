@@ -70,10 +70,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Source\GameObjects\Button.cpp" />
     <ClCompile Include="Source\GameObjects\Collision.cpp" />
     <ClCompile Include="Source\GameObjects\Factory.cpp" />
     <ClCompile Include="Source\GameObjects\GameObject.cpp" />
     <ClCompile Include="Source\GameObjects\Player.cpp" />
+    <ClCompile Include="Source\GameObjects\TextureObject.cpp" />
     <ClCompile Include="Source\InputManager\InputManager.cpp" />
     <ClCompile Include="Source\Lua\Lua.cpp" />
     <ClCompile Include="Source\main.cpp" />
@@ -87,10 +89,12 @@
     <ClInclude Include="libs\include\luaconf.h" />
     <ClInclude Include="libs\include\lualib.h" />
     <ClInclude Include="Libs\include\SOIL.h" />
+    <ClInclude Include="Source\GameObjects\Button.h" />
     <ClInclude Include="Source\GameObjects\Collision.h" />
     <ClInclude Include="Source\GameObjects\Factory.h" />
     <ClInclude Include="Source\GameObjects\GameObject.h" />
     <ClInclude Include="Source\GameObjects\Player.h" />
+    <ClInclude Include="Source\GameObjects\TextureObject.h" />
     <ClInclude Include="Source\InputManager\InputManager.h" />
     <ClInclude Include="Source\StateManager\StateManager.h" />
     <ClInclude Include="Source\System\Level.h" />
