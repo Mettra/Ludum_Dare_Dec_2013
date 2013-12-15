@@ -30,7 +30,6 @@ Graphics::Graphics() {
   
   currentTime = 0.0;
   glfwSwapInterval(1);
-  glGenTextures(MAX_TEXTURES, Texture);
   currentId = 0;
 
 
@@ -41,7 +40,6 @@ Graphics::Graphics() {
 }
 
 Graphics::~Graphics() {
-  glDeleteTextures(MAX_TEXTURES, Texture);
 }
 
 void Graphics::SetupProjection( int width, int height ) {
@@ -122,20 +120,26 @@ void Graphics::SetCameraPosition( float x, float y ) {
   cameraY = -y;
 }
 
-void Graphics::AddTexture( const char *filename, unsigned int index ) {
-  Texture[index] = SOIL_load_OGL_texture(
-                          filename,
-                          SOIL_LOAD_AUTO,
-                          SOIL_CREATE_NEW_ID,
-                          SOIL_FLAG_MIPMAPS | SOIL_FLAG_INVERT_Y | SOIL_FLAG_COMPRESS_TO_DXT
-                          );
- 
+unsigned Graphics::AddTexture( const char *filename) {
+  
+  Texture.push_back ( SOIL_load_OGL_texture( filename, SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_MIPMAPS | SOIL_FLAG_INVERT_Y | SOIL_FLAG_COMPRESS_TO_DXT ) ) ;
+  
+
+  
   fprintf(stderr,"SOIL loading status: '%s'\n", SOIL_last_result() );
   currentId++;
+
+  return Texture.size()-1;
 }
 
+void Graphics::FreeTexture( unsigned id ) {
+  glDeleteTextures(1, &Texture.at(id));
+
+}
+
+
 void Graphics::SetTexture( unsigned int id ) {
-  glBindTexture(GL_TEXTURE_2D, Texture[id]);
+  glBindTexture(GL_TEXTURE_2D, Texture.at(id));
   textureX1 = 0;
   textureX2 = 1;
   textureY1 = 1;
