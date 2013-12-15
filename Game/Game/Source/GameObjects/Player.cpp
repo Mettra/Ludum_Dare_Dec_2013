@@ -3,6 +3,7 @@
 #include <System\System.h>
 #include "Collision.h"
 #include <StateManager\StateManager.h>
+#include <InputManager/InputManager.h>
 #include <System\System.h>
 
 static const int maxVel = 10.0f;
@@ -37,17 +38,17 @@ void Player::ResolveCollition()
 
 void Player::Update(float dt)
 {
-  if(glfwGetKey(System::window,GLFW_KEY_D))
+  if(InputManager::IsKeyPressed(GLFW_KEY_D))
   {
     if(velX < maxVel)
       velX += maxVel / 5;
   }
-  if(glfwGetKey(System::window,GLFW_KEY_A))
+  if(InputManager::IsKeyPressed(GLFW_KEY_A))
   {
     if(velX > -maxVel)
       velX -= maxVel / 5;
   }
-  if(glfwGetKey(System::window,GLFW_KEY_W))
+  if(InputManager::IsKeyPressed(GLFW_KEY_W))
   {
     if(canJump)
     {

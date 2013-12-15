@@ -2,7 +2,7 @@
 *.sdf
 *.suo
 *.ipch
-Game/Game/Debug/
+Game/Game/Debug/*
 *.obj
 *.exe
 *.ilk

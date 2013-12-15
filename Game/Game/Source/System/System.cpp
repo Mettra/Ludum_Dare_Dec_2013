@@ -3,6 +3,7 @@
 #include <string>
 #include <StateManager\StateManager.h>
 #include <GameObjects\Factory.h>
+#include <InputManager\InputManager.h>
 
 bool System::isActive = true;
 GLFWwindow* System::window = 0;
@@ -26,7 +27,7 @@ void System::Initialize()
     return ;
   }
   glfwMakeContextCurrent(window);
-  glfwSetKeyCallback(window, key_callback);
+  InputManager::Init();
 
   //Can create graphics now
   GraphicsRender->SetupProjection(WINDOW_WIDTH, WINDOW_HEIGHT);
