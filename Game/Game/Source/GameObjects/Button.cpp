@@ -88,8 +88,8 @@ void Button::Update(float dt)
 
 void Button::Load(std::string const &filename)
 {
-  texture = GraphicsRender->GetCurrentId();
-  GraphicsRender->AddTexture(filename.c_str(),texture);
+  
+  texture = GraphicsRender->AddTexture(filename.c_str());
 }
 
 ADD_GAMEOBJECT(Button);

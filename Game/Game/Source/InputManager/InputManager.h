@@ -29,6 +29,7 @@ public:
   static float GetMouseY();
   
   static bool IsMouseClicked();
+  static bool IsMouseClickedRight();
   
   static bool AnyKeyInput();
 

@@ -30,4 +30,14 @@ void InputManager::HandleMouseMove( GLFWwindow* window, double x, double y) {
   mouseY = y;
 }
 
+bool InputManager::IsMouseClicked() {
+  return keys[GLFW_MOUSE_BUTTON_LEFT];
+}
+
+bool InputManager::IsMouseClickedRight() {
+  return keys[GLFW_MOUSE_BUTTON_RIGHT];
+}
+
+
+
 

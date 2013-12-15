@@ -6,6 +6,7 @@
 
 //Image Handling
 #include <include/SOIL.h>
+#include <vector>
 
 #define WINDOW_WIDTH 800
 #define WINDOW_HEIGHT 600
@@ -23,10 +24,20 @@ class Graphics {
 
   float cameraX;
   float cameraY;
+
   double currentTime;
   double dt;
-  GLuint Texture[MAX_TEXTURES];
+
+
+  std::vector<GLuint> Texture;
   unsigned int currentId;
+  
+  float textureX1;
+  float textureX2;
+  float textureY1;
+  float textureY2;
+
+  float currZ;
 
 public:
   Graphics();
@@ -51,10 +62,16 @@ public:
   void EndRender();
 
 
-  void AddTexture(const char *filename, unsigned int index);
+  unsigned AddTexture(const char *filename);
+  void     FreeTexture(unsigned id);
 
   void SetTexture(unsigned int id);
   void DrawTexturedRect(float x, float y, float height, float widt);
+
+  void TextureFlipHorizontal();
+  void TextureFlipVertical();
+
+  void SetCurrentZ(float newZ){currZ = newZ;};
 
 };
 

@@ -8,6 +8,7 @@
 #include <GameObjects\Player.h>
 #include <GameObjects\Button.h>
 
+
 struct Bitmap
 {
   Bitmap() : width(0),height(0),bitmap(0) {}
@@ -202,25 +203,27 @@ TileLevel::TileLevel(std::string level)
   delete [] image.bitmap;
     
   tileId = GraphicsRender->GetCurrentId();
-  GraphicsRender->AddTexture("block.png",tileId);
+  tileId = GraphicsRender->AddTexture("block.png");
+  
 
   checkPointId = GraphicsRender->GetCurrentId();
-  GraphicsRender->AddTexture("checkPoint.png",checkPointId);
+  GraphicsRender->AddTexture("checkPoint.png");
   
   checkPointTop = GraphicsRender->GetCurrentId();
-  GraphicsRender->AddTexture("checkPoint_top.png",checkPointTop);
+  GraphicsRender->AddTexture("checkPoint_top.png");
 
   beamId = GraphicsRender->GetCurrentId();
-  GraphicsRender->AddTexture("beam.png",beamId);
+  GraphicsRender->AddTexture("beam.png");
 
   beamIdHoriz = GraphicsRender->GetCurrentId();
-  GraphicsRender->AddTexture("beamHoriz.png",beamIdHoriz);
+  GraphicsRender->AddTexture("beamHoriz.png");
+  
 
   checkPointLeft = GraphicsRender->GetCurrentId();
-  GraphicsRender->AddTexture("checkPoint_left.png",checkPointLeft);
+  GraphicsRender->AddTexture("checkPoint_left.png");
 
   checkPointRight = GraphicsRender->GetCurrentId();
-  GraphicsRender->AddTexture("checkPoint_right.png",checkPointRight);
+  GraphicsRender->AddTexture("checkPoint_right.png");
 
   buttonId = GraphicsRender->GetCurrentId();
   GraphicsRender->AddTexture("button.png",buttonId);

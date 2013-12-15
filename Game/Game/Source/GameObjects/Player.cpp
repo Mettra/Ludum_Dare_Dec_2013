@@ -15,8 +15,8 @@ float SnapToCell(float val)
 
 void Player::Load(std::string const &filename,bool alt)
 {
-  texture = GraphicsRender->GetCurrentId();
-  GraphicsRender->AddTexture(filename.c_str(),texture);
+   
+  texture = GraphicsRender->AddTexture(filename.c_str());
 }
 
 void Player::ResolveCollition()

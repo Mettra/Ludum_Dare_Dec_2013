@@ -26,19 +26,20 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height){
 //GraphicsHandler
 Graphics::Graphics() {
   glClearColor(0.0, 0.0, 0.0, 0.0);
-  glEnable(GL_TEXTURE_2D);
+  //glEnable(GL_TEXTURE_2D);
   
   currentTime = 0.0;
   glfwSwapInterval(1);
-  glGenTextures(MAX_TEXTURES, Texture);
   currentId = 0;
 
-  glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+  glEnable(GL_ALPHA_TEST);
   glEnable( GL_BLEND );
+  glBlendFunc (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+  
 }
 
 Graphics::~Graphics() {
-  glDeleteTextures(MAX_TEXTURES, Texture);
 }
 
 void Graphics::SetupProjection( int width, int height ) {
@@ -49,8 +50,7 @@ void Graphics::SetupProjection( int width, int height ) {
   glMatrixMode(GL_PROJECTION);
   glLoadIdentity();
 
-  //Aspect Ratio Calculation
-  gluPerspective(52.0f, (GLfloat)width/(GLfloat)height, 1.0f, 1000.0f);
+  glOrtho(-width/2, width/2, -height/2, height/2, 100.0, 1100.0);
 
   glMatrixMode(GL_MODELVIEW);
   glLoadIdentity();
@@ -120,20 +120,31 @@ void Graphics::SetCameraPosition( float x, float y ) {
   cameraY = -y;
 }
 
-void Graphics::AddTexture( const char *filename, unsigned int index ) {
-  Texture[index] = SOIL_load_OGL_texture(
-                          filename,
-                          SOIL_LOAD_AUTO,
-                          SOIL_CREATE_NEW_ID,
-                          SOIL_FLAG_MIPMAPS | SOIL_FLAG_INVERT_Y | SOIL_FLAG_COMPRESS_TO_DXT
-                          );
- 
-  fprintf(stderr,"SOIL loading error: '%s'\n", SOIL_last_result() );
+unsigned Graphics::AddTexture( const char *filename) {
+  
+  Texture.push_back ( SOIL_load_OGL_texture( filename, SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_MIPMAPS | SOIL_FLAG_INVERT_Y | SOIL_FLAG_COMPRESS_TO_DXT ) ) ;
+  
+
+  
+  fprintf(stderr,"SOIL loading status: '%s'\n", SOIL_last_result() );
   currentId++;
+
+  return Texture.size()-1;
 }
 
+void Graphics::FreeTexture( unsigned id ) {
+  glDeleteTextures(1, &Texture.at(id));
+
+}
+
+
 void Graphics::SetTexture( unsigned int id ) {
-  glBindTexture(GL_TEXTURE_2D, Texture[id]);
+  glBindTexture(GL_TEXTURE_2D, Texture.at(id));
+  textureX1 = 0;
+  textureX2 = 1;
+  textureY1 = 1;
+  textureY2 = 0;
+
 }
 
 void Graphics::DrawTexturedRect( float x, float y, float height, float width ) {
@@ -149,18 +160,31 @@ void Graphics::DrawTexturedRect( float x, float y, float height, float width ) {
   
 
   glEnable(GL_TEXTURE_2D);
+  glEnable( GL_BLEND );
+  glBlendFunc (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
   glBegin(GL_TRIANGLES);
 
   SetColor(255, 255, 255, 255);
-  glTexCoord2f(0.0, 1.0);glVertex3f(x1,y1, 0.0f);
-  glTexCoord2f(0.0, 0.0);glVertex3f(x1,y2, 0.0f);
-  glTexCoord2f(1.0, 0.0);glVertex3f(x2,y2, 0.0f);
+  glTexCoord2f(textureX1, textureY1);glVertex3f(x1,y1, 0.0f);
+  glTexCoord2f(textureX1, textureY2);glVertex3f(x1,y2, 0.0f);
+  glTexCoord2f(textureX2, textureY2);glVertex3f(x2,y2, 0.0f);
 
-  glTexCoord2f(1.0, 0.0);glVertex3f(x2,y2, 0.0f);
-  glTexCoord2f(1.0, 1.0);glVertex3f(x2,y1, 0.0f);
-  glTexCoord2f(0.0, 1.0);glVertex3f(x1,y1, 0.0f);
+  glTexCoord2f(textureX2, textureY2);glVertex3f(x2,y2, 0.0f);
+  glTexCoord2f(textureX2, textureY1);glVertex3f(x2,y1, 0.0f);
+  glTexCoord2f(textureX1, textureY1);glVertex3f(x1,y1, 0.0f);
   glEnd();
   glDisable(GL_TEXTURE_2D);
+}
+
+void Graphics::TextureFlipHorizontal() {
+  textureX1 = 1;
+  textureX2 = 0;
+}
+
+void Graphics::TextureFlipVertical() {
+  textureY1 = 0;
+  textureY2 = 1;
 }
 
 
