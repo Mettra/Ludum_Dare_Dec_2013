@@ -1,4 +1,4 @@
-﻿Build started 12/14/2013 1:54:25 AM.
+﻿Build started 12/14/2013 5:28:58 PM.
      1>Project "C:\Users\Mettra\Documents\Ludum_Dare_Dec_2013\Game\Game\Game.vcxproj" on node 2 (build target(s)).
      1>C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\Microsoft.CppBuild.targets(299,5): warning MSB8004: Output Directory does not end with a trailing slash.  This build instance will add the slash as it is required to allow proper evaluation of the Output Directory.
      1>InitializeBuildStatus:
@@ -6,10 +6,10 @@
        ClCompile:
          C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt Source\GameObjects\Player.cpp
          Player.cpp
-     1>c:\users\mettra\documents\ludum_dare_dec_2013\game\game\source\gameobjects\player.cpp(6): warning C4244: 'initializing' : conversion from 'float' to 'const int', possible loss of data
-     1>c:\users\mettra\documents\ludum_dare_dec_2013\game\game\source\gameobjects\player.cpp(34): warning C4305: '*=' : truncation from 'double' to 'float'
-     1>c:\users\mettra\documents\ludum_dare_dec_2013\game\game\source\gameobjects\player.cpp(43): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\mettra\documents\ludum_dare_dec_2013\game\game\source\gameobjects\player.cpp(48): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\mettra\documents\ludum_dare_dec_2013\game\game\source\gameobjects\player.cpp(8): warning C4244: 'initializing' : conversion from 'float' to 'const int', possible loss of data
+     1>c:\users\mettra\documents\ludum_dare_dec_2013\game\game\source\gameobjects\player.cpp(63): warning C4305: '*=' : truncation from 'double' to 'float'
+     1>c:\users\mettra\documents\ludum_dare_dec_2013\game\game\source\gameobjects\player.cpp(91): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\mettra\documents\ludum_dare_dec_2013\game\game\source\gameobjects\player.cpp(91): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
        Link:
          C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Mettra\Documents\Ludum_Dare_Dec_2013\Game\\Output\Game.exe" /NOLOGO liblua52.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /ManifestFile:"Debug\Game.exe.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /DEBUG /PDB:"C:\Users\Mettra\Documents\Ludum_Dare_Dec_2013\Game\Output\Game.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\Mettra\Documents\Ludum_Dare_Dec_2013\Game\\Output\Game.lib" /MACHINE:X86 Debug\Collision.obj
          Debug\Factory.obj
@@ -40,4 +40,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:00.87
+Time Elapsed 00:00:00.88

@@ -33,6 +33,8 @@ public:
   void SetupProjection( int width, int height );
 
   void SetCameraPosition(float x, float y);
+  float GetCameraX() { return -cameraX;}
+  float GetCameraY() { return -cameraY;}
 
   void SetColor(unsigned char r, unsigned char g, unsigned char b, unsigned char a);
   void DrawRect(float x, float y, float height, float width);
