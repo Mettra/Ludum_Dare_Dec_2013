@@ -149,10 +149,11 @@ TileLevel::TileLevel(std::string level)
   colorMatch.push_back(std::make_pair(Color(0  ,0  ,254), Tile(TILE_MESSAGE_2             ,false) ));
   colorMatch.push_back(std::make_pair(Color(0  ,255,255), Tile(TILE_NEXT_LEVEL            ,false) ));
   colorMatch.push_back(std::make_pair(Color(0  ,100,0  ), Tile(TILE_BUTTON                ,true ) ));
+  colorMatch.push_back(std::make_pair(Color(255,0  ,255), Tile(TILE_REFILL_BOX            ,false ) ));
 
   Bitmap image = ReadImage(level);
 
-  usedClick = false;
+  usedClick = true;
   width = image.width;
   height = image.height;
 
@@ -173,7 +174,8 @@ TileLevel::TileLevel(std::string level)
       if(num == TILE_PLAYER)
       {
         Player *obj = (Player *)GameObjectFactory::CreateObject("Player");
-        obj->Load("guy.png");
+        obj->Load("guy.png",false);
+        obj->Load("guy_box.png",true);
         obj->SetPosition((float)x,(float)y);
         tile.data = TILE_AIR;
       }
@@ -193,6 +195,10 @@ TileLevel::TileLevel(std::string level)
         obj->height = 32;
         obj->width = 32;
       }
+      else if(num == TILE_REFILL_BOX)
+      {
+        refillTiles.push_back(&tileMap[x][y]);
+      }
 
       tile.x = x;
       tile.y = y;
@@ -201,32 +207,22 @@ TileLevel::TileLevel(std::string level)
     }
   }
   delete [] image.bitmap;
-    
-  tileId = GraphicsRender->GetCurrentId();
-  tileId = GraphicsRender->AddTexture("block.png");
   
+  for(int i = TILE_AIR; i < TILE_END; ++i)
+  {
+    tileTextures[i] = 0;
+  }
 
-  checkPointId = GraphicsRender->GetCurrentId();
-  GraphicsRender->AddTexture("checkPoint.png");
-  
-  checkPointTop = GraphicsRender->GetCurrentId();
-  GraphicsRender->AddTexture("checkPoint_top.png");
-
-  beamId = GraphicsRender->GetCurrentId();
-  GraphicsRender->AddTexture("beam.png");
-
-  beamIdHoriz = GraphicsRender->GetCurrentId();
-  GraphicsRender->AddTexture("beamHoriz.png");
-  
-
-  checkPointLeft = GraphicsRender->GetCurrentId();
-  GraphicsRender->AddTexture("checkPoint_left.png");
-
-  checkPointRight = GraphicsRender->GetCurrentId();
-  GraphicsRender->AddTexture("checkPoint_right.png");
-
-  buttonId = GraphicsRender->GetCurrentId();
-  GraphicsRender->AddTexture("button.png",buttonId);
+  tileTextures[TILE_SOLID] = GraphicsRender->AddTexture("block.png");
+  tileTextures[TILE_CHECKPOINT_BASE] = GraphicsRender->AddTexture("checkPoint.png");
+  tileTextures[TILE_CHECKPOINT_TOP] = GraphicsRender->AddTexture("checkPoint_top.png");
+  tileTextures[TILE_CHECKPOINT] = GraphicsRender->AddTexture("beam.png");
+  tileTextures[TILE_CHECKPOINT_HORIZ] = GraphicsRender->AddTexture("beamHoriz.png");
+  tileTextures[TILE_CHECKPOINT_LEFT] = GraphicsRender->AddTexture("checkPoint_left.png");
+  tileTextures[TILE_CHECKPOINT_RIGHT] = GraphicsRender->AddTexture("checkPoint_right.png");
+  tileTextures[TILE_BUTTON] = GraphicsRender->AddTexture("button.png");
+  tileTextures[TILE_REFILL_BOX] = GraphicsRender->AddTexture("refillBox.png");
+  tileTextures[TILE_REFILL_EMPTY] = GraphicsRender->AddTexture("refillBox_E.png");
 
   GraphicsRender->SetCameraPosition(100,150);
 }
@@ -234,6 +230,12 @@ TileLevel::TileLevel(std::string level)
 TileLevel::~TileLevel()
 {
   delete [] tileMap;
+
+  for(int i = TILE_AIR; i < TILE_END; ++i)
+  {
+    if(tileTextures[i] != 0)
+      GraphicsRender->FreeTexture(tileTextures[i]);
+  }
 }
 
 Tile *TileLevel::GetTile(int x, int y)
@@ -250,12 +252,30 @@ static const int h = 32;
 
 void TileLevel::ResetClick()
 {
-  Tile *tile = GetTile(PrevTile.x,PrevTile.y);
+  for(auto it = pastTiles.begin(); it != pastTiles.end(); ++it)
+  {
+    Tile *tile = GetTile(it->x,it->y);
+    *tile = *it;
+  }
 
-  if(tile != 0)
-    *tile = PrevTile;
+  for(auto it = refillTiles.begin(); it != refillTiles.end(); ++it)
+  {
+    if((*it)->data == TILE_REFILL_EMPTY)
+    {
+      (*it)->data = TILE_REFILL_BOX;
+    }
+  }
 
-  usedClick = false;
+  usedClick = true;
+}
+
+void TileLevel::GiveClick(Tile *tile)
+{
+  if(tile && tile->data == TILE_REFILL_BOX && usedClick)
+  {
+    usedClick = false;
+    tile->data = TILE_REFILL_EMPTY;
+  }
 }
 
 void TileLevel::Update(float dt)
@@ -284,16 +304,28 @@ void TileLevel::Update(float dt)
     Tile *tile = GetTile(tileX,tileY);
     if(tile != NULL)
     {
-      TileData tileData = leftClick ? TILE_SOLID : TILE_AIR;
+      TileData tileData = leftClick ? TILE_SOLID : TILE_SOLID;
 
-      if(tile->data != tileData)
+      if(tile->data != tileData && tile->data != TILE_REFILL_BOX && tile->data != TILE_REFILL_EMPTY)
       {
         usedClick = true;
-        PrevTile = *tile;
+        pastTiles.push_back(*tile);
 
         tile->data = tileData;
-        tile->solid = leftClick ? true : false;
+        tile->solid = leftClick ? true : true;
       }
+    }
+  }
+
+  GraphicsRender->SetTexture(tileTextures[TILE_SOLID]);
+  for(int i = 0; i < width; ++i)
+  {
+    for(int j = 0; j < height; ++j)
+    {
+      Tile &tile = tileMap[i][j];
+      if(tile.data != TILE_SOLID)
+        continue;
+      GraphicsRender->DrawTexturedRect((float)tile.x * 32,(float)tile.y * 32.0f,(float)h,(float)w);
     }
   }
 
@@ -302,29 +334,11 @@ void TileLevel::Update(float dt)
     for(int j = 0; j < height; ++j)
     {
       Tile &tile = tileMap[i][j];
+      if(tile.data == TILE_SOLID)
+        continue;
+
       unsigned char r,g,b,a;
       r = g = b = a = 0;
-      bool drawTexture = true;
-
-      if(tile.data == TILE_SOLID)
-        GraphicsRender->SetTexture(tileId);
-      else if(tile.data == TILE_CHECKPOINT_BASE)
-        GraphicsRender->SetTexture(checkPointId);
-      else if(tile.data == TILE_CHECKPOINT_TOP)
-        GraphicsRender->SetTexture(checkPointTop);
-      else if(tile.data == TILE_CHECKPOINT)
-        GraphicsRender->SetTexture(beamId);
-      else if(tile.data == TILE_CHECKPOINT_HORIZ)
-        GraphicsRender->SetTexture(beamIdHoriz);
-      else if(tile.data == TILE_CHECKPOINT_LEFT)
-        GraphicsRender->SetTexture(checkPointLeft);
-      else if(tile.data == TILE_CHECKPOINT_RIGHT)
-        GraphicsRender->SetTexture(checkPointRight);
-      else if(tile.data == TILE_BUTTON)
-        GraphicsRender->SetTexture(buttonId);
-
-      if(tile.data == TILE_AIR || tile.data == TILE_NEXT_LEVEL)
-        drawTexture = false;
 
       if(usedClick == false && tileX == i && tileY == j)
       {
@@ -338,8 +352,11 @@ void TileLevel::Update(float dt)
       }
 
       GraphicsRender->SetColor(r,g,b,a);
-      if(drawTexture)
+      if(tileTextures[tile.data] != 0)
+      {
+        GraphicsRender->SetTexture(tileTextures[tile.data]);
         GraphicsRender->DrawTexturedRect((float)tile.x * 32,(float)tile.y * 32.0f,(float)h,(float)w);
+      }
       else
         GraphicsRender->DrawRect((float)tile.x * 32,(float)tile.y * 32.0f,(float)h,(float)w);
     }

@@ -34,9 +34,12 @@ enum TileData
   TILE_CHECKPOINT_RIGHT,
   TILE_NEXT_LEVEL,
   TILE_BUTTON,
+  TILE_REFILL_BOX,
+  TILE_REFILL_EMPTY,
   TILE_MESSAGE_1,
   TILE_MESSAGE_2,
-  TILE_PLAYER = 99
+  TILE_PLAYER,
+  TILE_END,
 };
 
 struct Tile
@@ -61,24 +64,19 @@ public:
   Tile *GetTile(int x, int y);
   Tile HandleColor(Color c);
   void ResetClick();
+  bool HasBox() { return !usedClick; }
+  void GiveClick(Tile *tile);
 
 private:
   int width;
   int height;
   bool usedClick;
-  Tile PrevTile;
 
-  unsigned tileId;
-  unsigned checkPointId;
-  unsigned checkPointTop;
-  unsigned beamId;
-
-  unsigned beamIdHoriz;
-  unsigned checkPointLeft;
-  unsigned checkPointRight;
-  unsigned buttonId;
+  unsigned tileTextures[TILE_END];
 
   std::vector<std::pair<Color,Tile>> colorMatch;
+  std::vector<Tile *> refillTiles;
+  std::vector<Tile> pastTiles;
 
   Tile **tileMap;
 };

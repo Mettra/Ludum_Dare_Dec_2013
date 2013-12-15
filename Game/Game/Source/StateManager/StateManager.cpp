@@ -8,8 +8,9 @@
 
 void StateManager::Initialize()
 {
-  levels.push_back("level_2.bmp");
   levels.push_back("level_1.bmp");
+  levels.push_back("level_2.bmp");
+  levels.push_back("level_3.bmp");
   levelCount = -1;
 
   NextLevel();
@@ -19,7 +20,7 @@ void StateManager::Initialize()
 void StateManager::NextLevel()
 {
   levelCount++;
-  if(levelCount <= levels.size())
+  if(levelCount < levels.size())
   {
     levelName = levels[levelCount];
     LoadLevel(levelName);
@@ -27,6 +28,7 @@ void StateManager::NextLevel()
   else
   {
     System::isActive = false;
+    state = STATE_QUIT;
   }
 }
 

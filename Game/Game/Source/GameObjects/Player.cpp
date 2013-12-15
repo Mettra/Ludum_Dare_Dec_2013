@@ -15,8 +15,11 @@ float SnapToCell(float val)
 
 void Player::Load(std::string const &filename,bool alt)
 {
-   
-  texture = GraphicsRender->AddTexture(filename.c_str());
+  unsigned id = GraphicsRender->AddTexture(filename.c_str());
+  if(alt)
+    altTexture = id;
+  else
+    texture = id;
 }
 
 void Player::ResolveCollition()
@@ -48,17 +51,19 @@ void Player::Update(float dt)
   {
     if(velX < maxVel)
       velX += maxVel / 5;
+    facingLeft = false;
   }
   if(InputManager::IsKeyPressed(GLFW_KEY_A))
   {
     if(velX > -maxVel)
       velX -= maxVel / 5;
+    facingLeft = true;
   }
   if(InputManager::IsKeyPressed(GLFW_KEY_W))
   {
     if(canJump)
     {
-      velY = 15.0f;
+      velY = 14.0f;
       canJump = false;
     }
   }
@@ -101,6 +106,9 @@ void Player::Update(float dt)
     if(tile->data == TILE_CHECKPOINT || tile->data == TILE_CHECKPOINT_HORIZ)
       System::stateManager->GetLevel()->ResetClick();
     
+    if(tile->data == TILE_REFILL_BOX)
+      System::stateManager->GetLevel()->GiveClick(tile);
+
     if(tile->solid == true)
     {
       inBlockCount++;
@@ -116,7 +124,14 @@ void Player::Update(float dt)
     }
   }
 
-  GraphicsRender->SetTexture(texture);
+  if(System::stateManager->GetLevel()->HasBox())
+    GraphicsRender->SetTexture(altTexture);
+  else
+    GraphicsRender->SetTexture(texture);
+
+  if(facingLeft)
+    GraphicsRender->TextureFlipHorizontal();
+  
   GraphicsRender->DrawTexturedRect(x * 32,y * 32,32,32);
   GraphicsRender->SetCameraPosition(x * 32,y * 32);
 }

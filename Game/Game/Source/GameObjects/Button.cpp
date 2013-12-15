@@ -32,7 +32,7 @@ void RecursiveTileScan(Tile &currentTile,TileLevel &level,std::vector<Tile> &fou
 
       Tile *tile = level.GetTile(x,y);
 
-      if(tile != NULL && tile->aValue != 255 && (tile->aValue == currentTile.aValue || (tile->aValue >= alphaOffset && currentTile.aValue < alphaOffset) ))
+      if(tile != NULL && tile->aValue != 255 && (tile->aValue == currentTile.aValue || (currentTile.aValue < alphaOffset && tile->aValue == currentTile.aValue + alphaOffset)))
       {
         RecursiveTileScan(*tile,level,foundTiles,tile->aValue,oldPosition);
       }
@@ -80,8 +80,8 @@ void Button::Update(float dt)
       Tile &curTile = *it;
 
       Tile *tile = System::stateManager->GetLevel()->GetTile(curTile.x,curTile.y);
-      tile->data = curTile.solid == false ? TILE_SOLID : curTile.data;
-      tile->solid = curTile.solid == false ? true : curTile.solid;
+      tile->data = curTile.data != TILE_AIR ? curTile.data : TILE_AIR;
+      tile->solid = curTile.data != TILE_AIR ? curTile.solid : false;
     }
   }
 }
