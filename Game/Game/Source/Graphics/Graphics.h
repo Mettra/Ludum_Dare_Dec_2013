@@ -36,6 +36,7 @@ class Graphics {
   float textureY1;
   float textureY2;
 
+  float currZ;
 
 public:
   Graphics();
@@ -67,6 +68,8 @@ public:
 
   void TextureFlipHorizontal();
   void TextureFlipVertical();
+
+  void SetCurrentZ(float newZ){currZ = newZ;};
 
 };
 

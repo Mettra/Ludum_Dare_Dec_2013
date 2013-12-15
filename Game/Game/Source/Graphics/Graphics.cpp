@@ -26,15 +26,18 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height){
 //GraphicsHandler
 Graphics::Graphics() {
   glClearColor(0.0, 0.0, 0.0, 0.0);
-  glEnable(GL_TEXTURE_2D);
+  //glEnable(GL_TEXTURE_2D);
   
   currentTime = 0.0;
   glfwSwapInterval(1);
   glGenTextures(MAX_TEXTURES, Texture);
   currentId = 0;
 
-  glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+  glEnable(GL_ALPHA_TEST);
   glEnable( GL_BLEND );
+  glBlendFunc (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+  
 }
 
 Graphics::~Graphics() {
@@ -49,8 +52,7 @@ void Graphics::SetupProjection( int width, int height ) {
   glMatrixMode(GL_PROJECTION);
   glLoadIdentity();
 
-  //Aspect Ratio Calculation
-  gluPerspective(52.0f, (GLfloat)width/(GLfloat)height, 1.0f, 1000.0f);
+  glOrtho(-width/2, width/2, -height/2, height/2, 100.0, 1100.0);
 
   glMatrixMode(GL_MODELVIEW);
   glLoadIdentity();
@@ -128,7 +130,7 @@ void Graphics::AddTexture( const char *filename, unsigned int index ) {
                           SOIL_FLAG_MIPMAPS | SOIL_FLAG_INVERT_Y | SOIL_FLAG_COMPRESS_TO_DXT
                           );
  
-  fprintf(stderr,"SOIL loading error: '%s'\n", SOIL_last_result() );
+  fprintf(stderr,"SOIL loading status: '%s'\n", SOIL_last_result() );
   currentId++;
 }
 
@@ -154,6 +156,9 @@ void Graphics::DrawTexturedRect( float x, float y, float height, float width ) {
   
 
   glEnable(GL_TEXTURE_2D);
+  glEnable( GL_BLEND );
+  glBlendFunc (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
   glBegin(GL_TRIANGLES);
 
   SetColor(255, 255, 255, 255);
@@ -161,7 +166,7 @@ void Graphics::DrawTexturedRect( float x, float y, float height, float width ) {
   glTexCoord2f(textureX1, textureY2);glVertex3f(x1,y2, 0.0f);
   glTexCoord2f(textureX2, textureY2);glVertex3f(x2,y2, 0.0f);
 
-  glTexCoord2f(textureX2, 0.0);glVertex3f(x2,y2, 0.0f);
+  glTexCoord2f(textureX2, textureY2);glVertex3f(x2,y2, 0.0f);
   glTexCoord2f(textureX2, textureY1);glVertex3f(x2,y1, 0.0f);
   glTexCoord2f(textureX1, textureY1);glVertex3f(x1,y1, 0.0f);
   glEnd();
