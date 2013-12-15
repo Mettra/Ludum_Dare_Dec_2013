@@ -3,17 +3,35 @@
 #include <System\System.h>
 #include <GameObjects\Factory.h>
 #include <InputManager\InputManager.h>
+#include <GameObjects\Player.h>
+#include <GameObjects\TextureObject.h>
 
 void StateManager::Initialize()
 {
-  LoadLevel("baselevel.level");
+  levels.push_back("level_2.bmp");
+  levels.push_back("level_1.bmp");
+  levelCount = -1;
+
+  NextLevel();
   state = STATE_NEWLEVEL;
+}
+
+void StateManager::NextLevel()
+{
+  levelCount++;
+  if(levelCount <= levels.size())
+  {
+    levelName = levels[levelCount];
+    LoadLevel(levelName);
+  }
+  else
+  {
+    System::isActive = false;
+  }
 }
 
 void StateManager::Update()
 {
-  
-  GraphicsRender->AddTexture("img.png", 1);
   while(System::isActive)
   {
     if(state == STATE_NEWLEVEL)
@@ -27,30 +45,27 @@ void StateManager::Update()
 
     while(state == nextState)
     {  
-
       glfwPollEvents();
 
       InputManager::Update();
 
-
       GraphicsRender->BeginRender();
 
       level->Update(GraphicsRender->GetDt());
+      if(InputManager::IsKeyPressed(GLFW_KEY_R))
         nextState = STATE_RELOAD;
-
-      level->Update(0.016);
 
       for(auto it = gameObjectList->begin(); it != gameObjectList->end(); ++it)
       {
         (*it)->Update(GraphicsRender->GetDt());
       }
-
       
       GraphicsRender->EndRender();
 
       if( glfwWindowShouldClose(System::window) ){
         nextState = STATE_QUIT;
       }
+    }
 
     delete level;
     level = 0;
@@ -68,7 +83,7 @@ void StateManager::Update()
 
     prevState = state;
     state = nextState;
-    }
+    
 
     if(nextState == STATE_QUIT)
       System::isActive = false;

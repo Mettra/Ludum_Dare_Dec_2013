@@ -4,6 +4,8 @@
 #include <Graphics\Graphics.h>
 #include <GameObjects\Factory.h>
 #include <System\System.h>
+#include <GameObjects\TextureObject.h>
+#include <GameObjects\Player.h>
 #include <InputManager\InputManager.h>
 
 
@@ -83,7 +85,7 @@ Bitmap ReadImage(std::string filename)
     fread(&infoheader.colors,          sizeof(char) * 4,1,file);
     fread(&infoheader.importantColors, sizeof(char) * 4,1,file);
 
-    int size = infoheader.width*infoheader.height*(infoheader.bitCount>>3);;
+    int size = infoheader.width*infoheader.height*(infoheader.bitCount>>3);
     unsigned char *data = new unsigned char[size];
     memset(data,0,size * sizeof(unsigned char));
 
@@ -93,10 +95,10 @@ Bitmap ReadImage(std::string filename)
 
     bitmap.width = infoheader.width;
     bitmap.height = infoheader.height;
-    bitmap.bitmap = new Color*[bitmap.height];
+    bitmap.bitmap = new Color*[bitmap.width];
     for(int i = 0; i < bitmap.width; ++i)
     {
-      bitmap.bitmap[i] = new Color[bitmap.width];
+      bitmap.bitmap[i] = new Color[bitmap.height];
     }
 
     int offset = 0;
@@ -107,36 +109,49 @@ Bitmap ReadImage(std::string filename)
         bitmap.bitmap[i][j].b = data[offset];
         bitmap.bitmap[i][j].g = data[offset + 1];
         bitmap.bitmap[i][j].r = data[offset + 2];
-        offset += 3;
+        bitmap.bitmap[i][j].a = data[offset + 3];
+        offset += 4;
       }
     }
 
-    delete data;
+    delete [] data;
   }
 
   return bitmap;
 }
 
-int TileLevel::HandleColor(Color c)
+Tile TileLevel::HandleColor(Color c)
 {
   for(auto it = colorMatch.begin(); it != colorMatch.end(); ++it)
   {
     if(it->first == c)
+    {
+      it->second.aValue = c.a;
       return it->second;
+    }
   }
 
-  return TILE_AIR;
+  return Tile();
 }
 
 TileLevel::TileLevel(std::string level)
 {
-  colorMatch.push_back(std::make_pair(Color(0,0,0),TILE_SOLID));
-  colorMatch.push_back(std::make_pair(Color(255,255,255),TILE_AIR));
-  colorMatch.push_back(std::make_pair(Color(0,255,0),TILE_PLAYER));
-  colorMatch.push_back(std::make_pair(Color(255,255,0),TILE_CHECKPOINT));
+  colorMatch.push_back(std::make_pair(Color(0  ,0  ,0)  , Tile(TILE_SOLID                 ,true ) ));
+  colorMatch.push_back(std::make_pair(Color(255,255,255), Tile(TILE_AIR                   ,false) ));
+  colorMatch.push_back(std::make_pair(Color(0,  255,0)  , Tile(TILE_PLAYER                ,false) ));
+  colorMatch.push_back(std::make_pair(Color(255,255,0)  , Tile(TILE_CHECKPOINT            ,false) ));
+  colorMatch.push_back(std::make_pair(Color(200,255,0)  , Tile(TILE_CHECKPOINT_HORIZ      ,false) ));
+  colorMatch.push_back(std::make_pair(Color(200,200,0)  , Tile(TILE_CHECKPOINT_BASE       ,true ) ));
+  colorMatch.push_back(std::make_pair(Color(100,100,0)  , Tile(TILE_CHECKPOINT_TOP        ,true ) ));
+  colorMatch.push_back(std::make_pair(Color(150,200,0)  , Tile(TILE_CHECKPOINT_LEFT       ,true ) ));
+  colorMatch.push_back(std::make_pair(Color(100,200,0)  , Tile(TILE_CHECKPOINT_RIGHT      ,true ) ));
+  colorMatch.push_back(std::make_pair(Color(0  ,0  ,255), Tile(TILE_MESSAGE_1             ,false) ));
+  colorMatch.push_back(std::make_pair(Color(0  ,0  ,254), Tile(TILE_MESSAGE_2             ,false) ));
+  colorMatch.push_back(std::make_pair(Color(0  ,255,255), Tile(TILE_NEXT_LEVEL            ,false) ));
+  colorMatch.push_back(std::make_pair(Color(0  ,100,0  ), Tile(TILE_BUTTON                ,true ) ));
 
-  Bitmap image = ReadImage("level.bmp");
-  
+  Bitmap image = ReadImage(level);
+
   usedClick = false;
   width = image.width;
   height = image.height;
@@ -147,31 +162,67 @@ TileLevel::TileLevel(std::string level)
     tileMap[i] = new Tile[height];
   }
 
-
   for(int x = 0; x < image.width; x++)
   {
     for(int y = 0; y < image.height; y++)
     {
       Color c = image.bitmap[x][y];
-      int num = HandleColor(c);
+      Tile tile = HandleColor(c);
+
+      int num = tile.data;
       if(num == TILE_PLAYER)
       {
-        GameObject *obj = GameObjectFactory::CreateObject("Player");
+        Player *obj = (Player *)GameObjectFactory::CreateObject("Player");
+        obj->Load("guy.png");
         obj->SetPosition((float)x,(float)y);
-            
-        num = TILE_AIR;
+        tile.data = TILE_AIR;
+      }
+      else if(num == TILE_MESSAGE_1)
+      {
+        TextureObject *obj = (TextureObject *)GameObjectFactory::CreateObject("TextureObject");
+        obj->SetPosition((float)x + 0.5,(float)y + 0.5);
+        obj->Load("sign1.png");
+        obj->height = 128;
+        obj->width = 512;
+      }
+      else if(num == TILE_BUTTON)
+      {
+        TextureObject *obj = (TextureObject *)GameObjectFactory::CreateObject("TextureObject");
+        obj->SetPosition((float)x + 0.5,(float)y + 0.5);
+        obj->Load("guy.png");
+        obj->height = 128;
+        obj->width = 512;
       }
 
-      Tile tile;
-      tile.data = (TileData)num;
       tile.x = x;
       tile.y = y;
 
       tileMap[x][y] = tile;
     }
   }
-
   delete [] image.bitmap;
+    
+  tileId = GraphicsRender->GetCurrentId();
+  GraphicsRender->AddTexture("block.png",tileId);
+
+  checkPointId = GraphicsRender->GetCurrentId();
+  GraphicsRender->AddTexture("checkPoint.png",checkPointId);
+  
+  checkPointTop = GraphicsRender->GetCurrentId();
+  GraphicsRender->AddTexture("checkPoint_top.png",checkPointTop);
+
+  beamId = GraphicsRender->GetCurrentId();
+  GraphicsRender->AddTexture("beam.png",beamId);
+
+  beamIdHoriz = GraphicsRender->GetCurrentId();
+  GraphicsRender->AddTexture("beamHoriz.png",beamIdHoriz);
+
+  checkPointLeft = GraphicsRender->GetCurrentId();
+  GraphicsRender->AddTexture("checkPoint_left.png",checkPointLeft);
+
+  checkPointRight = GraphicsRender->GetCurrentId();
+  GraphicsRender->AddTexture("checkPoint_right.png",checkPointRight);
+  
 
   GraphicsRender->SetCameraPosition(100,150);
 }
@@ -221,19 +272,24 @@ void TileLevel::Update(float dt)
   int tileX = (int)(std::floor((dx / 32) + 0.5f));
   int tileY = (int)(std::floor((dy / 32) + 0.5f));
 
-  
+  bool leftClick = glfwGetMouseButton(System::window,GLFW_MOUSE_BUTTON_1) == GLFW_PRESS;
+  bool rightClick = glfwGetMouseButton(System::window,GLFW_MOUSE_BUTTON_2) == GLFW_PRESS;
 
-  if(usedClick == false && InputManager::IsMouseClickedRight() )
+  if(usedClick == false && (leftClick || rightClick))
   {
     Tile *tile = GetTile(tileX,tileY);
-    if(tile == NULL)
+    if(tile != NULL)
     {
-    }
-    else
-    {
-      usedClick = true;
-      PrevTile = *tile;
-      tile->data = TILE_SOLID;
+      TileData tileData = leftClick ? TILE_SOLID : TILE_AIR;
+
+      if(tile->data != tileData)
+      {
+        //usedClick = true;
+        PrevTile = *tile;
+
+        tile->data = tileData;
+        tile->solid = leftClick ? true : false;
+      }
     }
   }
 
@@ -244,18 +300,25 @@ void TileLevel::Update(float dt)
       Tile &tile = tileMap[i][j];
       unsigned char r,g,b,a;
       r = g = b = a = 0;
+      bool drawTexture = true;
 
       if(tile.data == TILE_SOLID)
-      {
-        r = 255;
-        a = 255;
-      }
-      if(tile.data == TILE_CHECKPOINT)
-      {
-        r = 255;
-        g = 255;
-        a = 255;
-      }
+        GraphicsRender->SetTexture(tileId);
+      else if(tile.data == TILE_CHECKPOINT_BASE)
+        GraphicsRender->SetTexture(checkPointId);
+      else if(tile.data == TILE_CHECKPOINT_TOP)
+        GraphicsRender->SetTexture(checkPointTop);
+      else if(tile.data == TILE_CHECKPOINT)
+        GraphicsRender->SetTexture(beamId);
+      else if(tile.data == TILE_CHECKPOINT_HORIZ)
+        GraphicsRender->SetTexture(beamIdHoriz);
+      else if(tile.data == TILE_CHECKPOINT_LEFT)
+        GraphicsRender->SetTexture(checkPointLeft);
+      else if(tile.data == TILE_CHECKPOINT_RIGHT)
+        GraphicsRender->SetTexture(checkPointRight);
+
+      if(tile.data == TILE_AIR || tile.data == TILE_NEXT_LEVEL)
+        drawTexture = false;
 
       if(usedClick == false && tileX == i && tileY == j)
       {
@@ -269,7 +332,10 @@ void TileLevel::Update(float dt)
       }
 
       GraphicsRender->SetColor(r,g,b,a);
-      GraphicsRender->DrawRect((float)tile.x * 32,(float)tile.y * 32.0f,(float)h,(float)w);
+      if(drawTexture)
+        GraphicsRender->DrawTexturedRect((float)tile.x * 32,(float)tile.y * 32.0f,(float)h,(float)w);
+      else
+        GraphicsRender->DrawRect((float)tile.x * 32,(float)tile.y * 32.0f,(float)h,(float)w);
     }
   }
 }

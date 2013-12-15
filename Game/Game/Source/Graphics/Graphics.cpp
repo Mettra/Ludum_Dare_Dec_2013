@@ -27,10 +27,14 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height){
 Graphics::Graphics() {
   glClearColor(0.0, 0.0, 0.0, 0.0);
   glEnable(GL_TEXTURE_2D);
+  
   currentTime = 0.0;
   glfwSwapInterval(1);
   glGenTextures(MAX_TEXTURES, Texture);
-  
+  currentId = 0;
+
+  glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+  glEnable( GL_BLEND );
 }
 
 Graphics::~Graphics() {
@@ -70,9 +74,8 @@ void Graphics::BeginRender(){
     dt = time - currentTime; 
   }*/
   currentTime = time;
-  fprintf(stderr, "DT: %f\n", dt);
 
-
+  glClearColor(0.0, 0.0, 0.0, 0.0);
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
   glLoadIdentity();
 
@@ -80,8 +83,6 @@ void Graphics::BeginRender(){
 
   glPolygonMode(GL_FRONT, GL_FILL);
   glEnable(GL_CULL_FACE);
-
-
 }
 
 void Graphics::EndRender(){
@@ -126,10 +127,9 @@ void Graphics::AddTexture( const char *filename, unsigned int index ) {
                           SOIL_CREATE_NEW_ID,
                           SOIL_FLAG_MIPMAPS | SOIL_FLAG_INVERT_Y | SOIL_FLAG_COMPRESS_TO_DXT
                           );
-  glBindTexture(GL_TEXTURE_2D, Texture[index]);
-  
+ 
   fprintf(stderr,"SOIL loading error: '%s'\n", SOIL_last_result() );
-  
+  currentId++;
 }
 
 void Graphics::SetTexture( unsigned int id ) {

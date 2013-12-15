@@ -29,6 +29,7 @@ class Graphics {
 
 
   GLuint Texture[MAX_TEXTURES];
+  unsigned int currentId;
   
   float textureX1;
   float textureX2;
@@ -43,6 +44,8 @@ public:
   double GetDt(){return dt;};
 
   void Init();
+
+  unsigned int GetCurrentId() { return currentId; }
 
   void SetupProjection( int width, int height );
 

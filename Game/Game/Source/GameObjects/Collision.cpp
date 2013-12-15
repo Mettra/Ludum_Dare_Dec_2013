@@ -11,7 +11,7 @@ bool GetTileData(Tile **tileMap,int width, int height,float xF,float yF)
   if(x < 0 || x >= width || y < 0 || y >= height)
     return false;
 
-  return tileMap[x][y].data == TILE_SOLID;
+  return tileMap[x][y].solid;
 }
 
 int DetectCollision(float x, float y,float width, float height)

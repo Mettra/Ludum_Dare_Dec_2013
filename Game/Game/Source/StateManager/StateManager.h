@@ -1,4 +1,5 @@
 #include <string>
+#include <vector>
 
 enum State
 {
@@ -18,6 +19,8 @@ public:
     nextState = STATE_NEWLEVEL;
   }
 
+  void NextLevel();
+
   void Update();
   class TileLevel *GetLevel(){ return level; }
 
@@ -25,9 +28,12 @@ public:
 private:
   class TileLevel *level;
 
+  unsigned int levelCount;
+
   State state;
   State nextState;
   State prevState;
 
   std::string levelName;
+  std::vector<std::string> levels;
 };
