@@ -1,5 +1,4 @@
 #include "System.h"
-#include <Lua\Lua.h>
 #include <string>
 #include <StateManager\StateManager.h>
 #include <GameObjects\Factory.h>
@@ -20,7 +19,7 @@ void System::Initialize()
   if (!glfwInit())
     return ;
 
-  window = glfwCreateWindow(800, 600, "A GLFW Example", NULL, NULL);
+  window = glfwCreateWindow(800, 600, "Temple Of Boxes", NULL, NULL);
   if (!window)
   {
     glfwTerminate();
