@@ -57,7 +57,7 @@ class TileLevel
 public:
   TileLevel(std::string levelName);
   ~TileLevel();
-  void Update(float dt);
+  virtual void Update(float dt);
   Tile **GetTileMap() { return tileMap; }
   int Width() { return width; }
   int Height() { return height; }

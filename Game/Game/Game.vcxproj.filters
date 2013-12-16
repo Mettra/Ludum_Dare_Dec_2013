@@ -57,6 +57,9 @@
     <ClCompile Include="Source\GameObjects\Button.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Source\System\StartScreen.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\System\BaseType.h">
@@ -123,6 +126,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Source\GameObjects\Button.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\System\StartScreen.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

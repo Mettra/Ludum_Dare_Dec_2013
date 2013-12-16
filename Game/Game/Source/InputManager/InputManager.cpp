@@ -38,6 +38,16 @@ bool InputManager::IsMouseClickedRight() {
   return keys[GLFW_MOUSE_BUTTON_RIGHT];
 }
 
+bool InputManager::AnyKeyInput()
+{
+  for(int i = 0; i < (sizeof(keys) / sizeof(keys[0])); ++i)
+  {
+    if(keys[i])
+      return true;
+  }
+  return false;
+}
+
 
 
 

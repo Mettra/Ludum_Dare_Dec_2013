@@ -82,6 +82,7 @@
     <ClCompile Include="Source\StateManager\StateManager.cpp" />
     <ClCompile Include="Source\System\Level.cpp" />
     <ClCompile Include="Source\System\Meta.cpp" />
+    <ClCompile Include="Source\System\StartScreen.cpp" />
     <ClCompile Include="Source\System\System.cpp" />
     <ClInclude Include="libs\include\lauxlib.h" />
     <ClInclude Include="libs\include\lua.h" />
@@ -103,6 +104,7 @@
     <ClInclude Include="Source\Graphics\GLFW\glfw3native.h" />
     <ClInclude Include="Source\System\BaseType.h" />
     <ClInclude Include="Source\System\Meta.h" />
+    <ClInclude Include="Source\System\StartScreen.h" />
     <ClInclude Include="Source\System\System.h" />
     <ClCompile Include="Source\Graphics\Graphics.cpp" />
   </ItemGroup>

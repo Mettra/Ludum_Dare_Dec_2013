@@ -5,6 +5,7 @@
 #include <InputManager\InputManager.h>
 #include <GameObjects\Player.h>
 #include <GameObjects\TextureObject.h>
+#include <System\StartScreen.h>
 
 void StateManager::Initialize()
 {
@@ -13,8 +14,7 @@ void StateManager::Initialize()
   levels.push_back("level_3.bmp");
   levelCount = -1;
 
-  NextLevel();
-  state = STATE_NEWLEVEL;
+  state = STATE_START;
 }
 
 void StateManager::NextLevel()
@@ -27,8 +27,7 @@ void StateManager::NextLevel()
   }
   else
   {
-    System::isActive = false;
-    state = STATE_QUIT;
+    state = STATE_START;
   }
 }
 
@@ -39,6 +38,13 @@ void StateManager::Update()
     if(state == STATE_NEWLEVEL)
     {
       level = new TileLevel(levelName);
+      prevState = state;
+      state = STATE_LEVEL;
+      nextState = state;
+    }
+    else if(state == STATE_START)
+    {
+      level = new StartScreen();
       prevState = state;
       state = STATE_LEVEL;
       nextState = state;

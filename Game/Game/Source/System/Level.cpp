@@ -149,7 +149,7 @@ TileLevel::TileLevel(std::string level)
   colorMatch.push_back(std::make_pair(Color(0  ,0  ,254), Tile(TILE_MESSAGE_2             ,false) ));
   colorMatch.push_back(std::make_pair(Color(0  ,255,255), Tile(TILE_NEXT_LEVEL            ,false) ));
   colorMatch.push_back(std::make_pair(Color(0  ,100,0  ), Tile(TILE_BUTTON                ,true ) ));
-  colorMatch.push_back(std::make_pair(Color(255,0  ,255), Tile(TILE_REFILL_BOX            ,false ) ));
+  colorMatch.push_back(std::make_pair(Color(255,0  ,255), Tile(TILE_REFILL_BOX            ,false) ));
 
   Bitmap image = ReadImage(level);
 
@@ -213,16 +213,16 @@ TileLevel::TileLevel(std::string level)
     tileTextures[i] = 0;
   }
 
-  tileTextures[TILE_SOLID] = GraphicsRender->AddTexture("block.png");
-  tileTextures[TILE_CHECKPOINT_BASE] = GraphicsRender->AddTexture("checkPoint.png");
-  tileTextures[TILE_CHECKPOINT_TOP] = GraphicsRender->AddTexture("checkPoint_top.png");
-  tileTextures[TILE_CHECKPOINT] = GraphicsRender->AddTexture("beam.png");
+  tileTextures[TILE_SOLID]            = GraphicsRender->AddTexture("block.png");
+  tileTextures[TILE_CHECKPOINT_BASE]  = GraphicsRender->AddTexture("checkPoint.png");
+  tileTextures[TILE_CHECKPOINT_TOP]   = GraphicsRender->AddTexture("checkPoint_top.png");
+  tileTextures[TILE_CHECKPOINT]       = GraphicsRender->AddTexture("beam.png");
   tileTextures[TILE_CHECKPOINT_HORIZ] = GraphicsRender->AddTexture("beamHoriz.png");
-  tileTextures[TILE_CHECKPOINT_LEFT] = GraphicsRender->AddTexture("checkPoint_left.png");
+  tileTextures[TILE_CHECKPOINT_LEFT]  = GraphicsRender->AddTexture("checkPoint_left.png");
   tileTextures[TILE_CHECKPOINT_RIGHT] = GraphicsRender->AddTexture("checkPoint_right.png");
-  tileTextures[TILE_BUTTON] = GraphicsRender->AddTexture("button.png");
-  tileTextures[TILE_REFILL_BOX] = GraphicsRender->AddTexture("refillBox.png");
-  tileTextures[TILE_REFILL_EMPTY] = GraphicsRender->AddTexture("refillBox_E.png");
+  tileTextures[TILE_BUTTON]           = GraphicsRender->AddTexture("button.png");
+  tileTextures[TILE_REFILL_BOX]       = GraphicsRender->AddTexture("refillBox.png");
+  tileTextures[TILE_REFILL_EMPTY]     = GraphicsRender->AddTexture("refillBox_E.png");
 
   GraphicsRender->SetCameraPosition(100,150);
 }
