@@ -68,11 +68,11 @@ void Graphics::BeginRender(){
   double time = glfwGetTime();
   dt = time - currentTime;
   double maxFramerate = FRAMERATE_MAX;
-  /*
+  
   while( dt < maxFramerate){
     time = glfwGetTime();
     dt = time - currentTime; 
-  }*/
+  }
   currentTime = time;
 
   glClearColor(0.0, 0.0, 0.0, 0.0);

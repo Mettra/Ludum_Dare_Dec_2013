@@ -58,8 +58,12 @@ void StateManager::Update()
       InputManager::Update();
 
       GraphicsRender->BeginRender();
+      if (level)
+        level->Update(GraphicsRender->GetDt());
+      else
+        nextState = STATE_QUIT;
 
-      level->Update(GraphicsRender->GetDt());
+      fprintf(stderr, "DT: %f\n", GraphicsRender->GetDt());
       if(InputManager::IsKeyPressed(GLFW_KEY_R))
         nextState = STATE_RELOAD;
 
