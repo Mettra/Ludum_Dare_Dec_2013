@@ -3,7 +3,7 @@
 
 #include "Graphics/Graphics.h"
 
-Graphics* GraphicsRender = new Graphics();
+Graphics* GraphicsRender = 0;
 
 struct S : public MetaInterface<S>
 {
@@ -19,27 +19,12 @@ META_DEFINE(S)
   ADD_MEMBER(info);
 }
 
-Graphics* g_glRender = new Graphics;
-
 int main(void)
 {
+  GraphicsRender = new Graphics();
+
   System::Initialize();
   System::Update();
-
-  //S s;
-  //s.thing = 1;
-  //s.thing2 = 2;
-  //s.info = "Hi!";
-  //
-  //s.AddMember("dThing",new double());
-  //s.GetMember<double>("dThing") = 5.0;
-  //
-  //std::string thing = s.GetMember<std::string>("info");
-  //
-  //printf("%s %i %f \n",thing.c_str(),s.GetMember<int>("thing"),s.GetMember<double>("dThing"));
-  //
-  //
-  //getchar();
 
   return 0;
 }

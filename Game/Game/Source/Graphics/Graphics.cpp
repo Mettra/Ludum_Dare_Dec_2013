@@ -36,7 +36,6 @@ Graphics::Graphics() {
   glEnable(GL_ALPHA_TEST);
   glEnable( GL_BLEND );
   glBlendFunc (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-  
 }
 
 Graphics::~Graphics() {
@@ -68,11 +67,11 @@ void Graphics::BeginRender(){
   double time = glfwGetTime();
   dt = time - currentTime;
   double maxFramerate = FRAMERATE_MAX;
-  /*
+  
   while( dt < maxFramerate){
     time = glfwGetTime();
     dt = time - currentTime; 
-  }*/
+  }
   currentTime = time;
 
   glClearColor(0.0, 0.0, 0.0, 0.0);

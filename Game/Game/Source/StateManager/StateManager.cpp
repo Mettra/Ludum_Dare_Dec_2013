@@ -27,7 +27,8 @@ void StateManager::NextLevel()
   }
   else
   {
-    state = STATE_START;
+    nextState = STATE_START;
+    levelCount = -1;
   }
 }
 
@@ -62,6 +63,8 @@ void StateManager::Update()
       level->Update(GraphicsRender->GetDt());
       if(InputManager::IsKeyPressed(GLFW_KEY_R))
         nextState = STATE_RELOAD;
+      if(InputManager::IsKeyPressed(GLFW_KEY_N))
+        NextLevel();
 
       for(auto it = gameObjectList->begin(); it != gameObjectList->end(); ++it)
       {
